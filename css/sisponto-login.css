@@ -16,7 +16,7 @@ body{
 	display: block;
 	width:100vw;
 	height: 100vh;
-	background:url('../images/blue-matrix.png') no-repeat center;
+	background:url('../imagens/blue-matrix.png') no-repeat center;
 	background-size: cover;
 }
 
@@ -102,7 +102,7 @@ a:hover{
 	width:170px;
 	height: 45px;
 	margin:0 auto;
-	background: url('../images/logo_1.png') no-repeat center;
+	background: url('../imagens/logo_1.png') no-repeat center;
 	border-bottom:2px solid #FF8C00;
 }
 
