@@ -5,9 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Sisponto - Início</title>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
-        <link rel="stylesheet" type="text/css" href="css/sisponto.css"/>
+        <link rel="stylesheet" type="text/css" href="css/index.css"/>
     </head>
-    <body>
+    <body ng-app="sisponto" ng-controller="sisponto-controller-index">
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -40,7 +40,7 @@
                 </div>
             </div> <!-- /#top -->
             <hr />
-            <div id="list" class="row">
+            <div class="row">
                 <div class="table-responsive col-md-12" id="listaProjetos">
                     <table class="table table-striped" cellspacing="0" cellpadding="0">
                         <thead>
@@ -53,11 +53,11 @@
                              </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="">
-                                <td>{{id}}</td>
-                                <td>{{descrição descrição descrição descrição}}</td>
-                                <td>{{Coordenador}}</td>
-                                <td>{{Jes}}</td>
+                            <tr ng-repeat="registro in lista">
+                                <td>{{registro.id}}</td>
+                                <td>{{registro.descricao}}</td>
+                                <td>{{registro.perfil}}</td>
+                                <td>{{registro.cliente}}</td>
                                 <td class="actions">
                                     <a class="btn btn-success btn-xs" href="view.html">Visualizar</a>
                                     <a class="btn btn-warning btn-xs" href="edit.html">Editar</a>
@@ -77,9 +77,9 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="modalLabel">Excluir Item</h4>
+                            <h4 class="modal-title" id="modalLabel">Excluir Projeto</h4>
                         </div>
-                        <div class="modal-body">Deseja realmente excluir este item? </div>
+                        <div class="modal-body">Deseja realmente excluir este projeto? </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary">Sim</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
@@ -92,4 +92,5 @@
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/angular.min.js"></script>
+    <script src="js/validate/index.js"></script>
 </html>
