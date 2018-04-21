@@ -1,4 +1,4 @@
-angular.module('sisponto',[]).controller('sisponto-controller-index', function ($scope, $http, $window) {
+angular.module('sisponto',['angularUtils.directives.dirPagination']).controller('sisponto-controller-index', function ($scope, $http, $window) {
 
     $scope.lista = [
         {
@@ -13,5 +13,9 @@ angular.module('sisponto',[]).controller('sisponto-controller-index', function (
             'perfil': 'colaborador',
             'cliente': 'spader'
         }]
-
+        
+    $scope.ordenar = function(keyname){
+        $scope.sortKey = keyname;
+        $scope.reverse = !$scope.reverse;
+    };
 });
