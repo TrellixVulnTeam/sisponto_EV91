@@ -30,7 +30,7 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <div class="input-group h2">
-                        <input name="data[search]" class="form-control" id="search" type="text" placeholder="Pesquisar Projeto">
+                        <input name="data[search]" ng-model="procurar" class="form-control" id="search" type="text" placeholder="Pesquisar Projeto">
                         <span class="input-group-btn">
                             <button class="btn btn-primary" type="submit">
                                 <span class="glyphicon glyphicon-search"></span>
@@ -39,21 +39,34 @@
                     </div>
                 </div>
             </div> <!-- /#top -->
+            <div id="btns" class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-2">
+                    <a class="btn btn-primary addCliFuncProj" href="#" role="button">Adicionar Projeto</a>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-primary addCliFuncProj" href="#" role="button">Adicionar Cliente</a>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-primary addCliFuncProj" href="#" role="button">Adicionar Funcionário</a>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
             <hr />
             <div class="row">
                 <div class="table-responsive col-md-12" id="listaProjetos">
                     <table class="table table-striped" cellspacing="0" cellpadding="0">
                         <thead>
                             <tr class="table-header">
-                                <th>Código</th>
+                                <th ng-click="ordenar('id')">Código</th>
                                 <th>Descrição</th>
-                                <th>Perfil</th>
+                                <th ng-click="ordenar('perfil')">Perfil</th>
                                 <th>Cliente</th>
                                 <th class="actions">Ações</th>
                              </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="registro in lista">
+                            <tr dir-paginate="registro in lista|filter:procurar|orderBy:sortKey:reverse|itemsPerPage:1">
                                 <td>{{registro.id}}</td>
                                 <td>{{registro.descricao}}</td>
                                 <td>{{registro.perfil}}</td>
@@ -66,6 +79,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    <dir-pagination-controls max-size="5" boundary-links="true"></dir-pagination-controls>
                 </div>
             </div> <!-- /#list -->
             <div id="bottom" class="row">
@@ -93,4 +107,5 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/angular.min.js"></script>
     <script src="js/validate/index.js"></script>
+    <script src="js/validate/dirPagination.js"></script>
 </html>
