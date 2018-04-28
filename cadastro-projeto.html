@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Sisponto - Início</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="css/cadastro-cliente.css"/>
+        <link rel="stylesheet" type="text/css" href="css/jquery-confirm.min.css"/>
+    </head>
+    <body ng-app="sisponto" ng-controller="sisponto-controller-cadastroProjeto">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">SISPONTO</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Início</a></li>
+                    <li><a href="#">Clientes</a></li>
+                    <li><a href="#">Funcionários</a></li>
+                    <li><a href="#">Histórico</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div id="main" class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-sd-12">
+                    <div class="col-md-8 col-centered col-sd-12">
+                        <h1 class="form-title">Registrar Novo Projeto</h1>
+                    </div>
+                <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 col-sd-2"></div>
+                <div class="col-md-8 col-sd-10">
+                    <form class="form-horizontal" name="formGrupo" id="formCadProjeto">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="nome">Descrição:</label>
+                            <div class="col-sm-10">
+                                <textarea type="text" class="form-control" id="descricao" rows="5"></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="table-responsive col-md-12" id="listaProjetos">
+                                <table class="table table-striped" cellspacing="0" cellpadding="0" id="tableClientes">
+                                    <thead>
+                                        <tr class="table-header">
+                                            <th>Selecione</th>
+                                            <th>CPF/CNPJ</th>
+                                            <th>Cliente</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="registro in listaClientes">
+                                            <td><input type="checkbox" name="chkClientes"></td>
+                                            <td>{{registro.codigo}}</td>
+                                            <td>{{registro.nome}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> <!-- /#list -->
+                        <div class="form-group"> 
+                            <div class="col-sm-10">
+                                <button type="submit" class="btn btn-primary" ng-click="confirmarCadastroProjeto()">Cadastrar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="js/jquery-2.1.4.min.js"></script>
+    <script src="js/jquery.mask.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/jquery-confirm.min.js"></script>
+    <script src="js/validate/cadastro-projeto.js"></script>
+</html>
