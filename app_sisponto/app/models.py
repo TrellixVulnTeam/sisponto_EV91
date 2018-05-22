@@ -57,6 +57,20 @@ class Talk(db.Model):
     venue_url = db.Column(db.String(128))
     date = db.Column(db.DateTime())
 
+class Cliente(db.Model):
+    __tablename__ = 'TBCliente'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    cpfCnpj = db.Column(db.String(14), nullable=False, unique=True)
+    nome = db.Column(db.String(64), nullable=False)
+    tipoPessoa = db.Column(db.String(1), nullable=False)
+    email = db.Column(db.String(128), nullable=False, unique=True)
+
+    def __init__(self, cpfCnpjRecebido, nomeRecebido, tipoPessoaRecebido, emailRecebido):
+        self.cpfCnpj = cpfCnpjRecebido
+        self.nome = nomeRecebido
+        self.tipoPessoa = tipoPessoaRecebido
+        self.email = emailRecebido
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
