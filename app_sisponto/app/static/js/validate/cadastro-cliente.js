@@ -1,5 +1,7 @@
 angular.module('sisponto',[]).controller('sisponto-controller-cadastroCliente', function ($scope, $http, $window) {
 
+    $scope.cliente = {};
+
     $(document).ready(function () { 
         $('#divCpfCnpj').hide();
     });
@@ -34,7 +36,8 @@ angular.module('sisponto',[]).controller('sisponto-controller-cadastroCliente', 
                 $('#cpfCnpj').focus();
                 return false;
             }
-            // adicionar no JSON com replace(/\D/g, "")
+            $scope.cliente.tipoPessoa = "F";
+            $scope.cliente.cpfCnpj = $('#cpfCnpj').val().replace(/\D/g, "").padStart(14, '0');
         }
         else
         {
@@ -44,7 +47,8 @@ angular.module('sisponto',[]).controller('sisponto-controller-cadastroCliente', 
                 $('#cpfCnpj').focus();
                 return false;
             }
-            // adicionar no JSON com replace(/\D/g, "")
+            $scope.cliente.tipoPessoa = "J";
+            $scope.cliente.cpfCnpj = $('#cpfCnpj').val().replace(/\D/g, "").padStart(14, '0');
         }
 
         if(!campoNomeVazio())
@@ -53,6 +57,13 @@ angular.module('sisponto',[]).controller('sisponto-controller-cadastroCliente', 
             $('#nome').focus();
             return false;
         }
+        if(!campoEmailVazio())
+        {
+            alert('Campo EMAIL é obrigatório');
+            $('#email').focus();
+            return false;
+        }
+        $scope.cliente.email = $('#email').val().trim();
         if(!campoCpfCnpjVazio())
         {
             alert('Campo CPF/CNPJ é obrigatório');
@@ -65,6 +76,16 @@ angular.module('sisponto',[]).controller('sisponto-controller-cadastroCliente', 
             $('#nome').focus();
             return false;
         }
+        $scope.cliente.nome = $('#nome').val().trim();
+
+        $http.post('/cadastro-cliente', $scope.cliente).success(function (data, status) {
+            if(status === 200 && data.result){
+                alert(data.mensagem);
+                location.reload();
+            } else {
+                alert(data.mensagem);
+            }
+        });
     }
 
     function campoNomeVazio()
@@ -88,6 +109,15 @@ angular.module('sisponto',[]).controller('sisponto-controller-cadastroCliente', 
     function campoCpfCnpjVazio()
     {
         if($('#cpfCnpj').val())
+        {
+            return true;
+        }
+        return false;
+    }
+
+    function campoEmailVazio()
+    {
+        if($('#email').val())
         {
             return true;
         }
