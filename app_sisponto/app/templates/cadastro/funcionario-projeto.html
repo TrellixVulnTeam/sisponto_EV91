@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Sisponto - FuncionárioxProjeto</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../static/css/funcionario-projeto.css"/>
+    </head>
+    <body ng-app="sisponto" ng-controller="sisponto-controller-funcionario-projeto">
+        {% include 'navbar.html' %}
+
+        <div id="main" class="container-fluid">
+            <form id="frmFuncProj" method="POST" action="#">
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="form-group col-md-4 col-sd-12 colCentered text-center">
+                        <label for="slctFuncionarios">Funcionário:</label>
+                        <select class="form-control" id="slctFuncionarios">
+                            <option>1</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="form-group col-md-4 col-sd-12 text-center">
+                        <label for="slctProjetos">Projeto:</label>
+                        <select class="form-control" id="slctProjetos">
+                            <option>1</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="checkbox col-md-4 col-sd-12">
+                        <label><input type="checkbox" value="">Coordenador</label>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+                <div class="col-md-4"></div>
+                <div class="checkbox col-md-4 col-sd-12">
+                    <label><button type="submit" class="btn btn-primary">Cadastrar</button></label>
+                </div>
+                <div class="col-md-4"></div>
+            </form>
+        </div>  <!-- /#main -->
+    </body>
+    <script src="../static/js/jquery-2.1.4.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/angular.min.js"></script>
+    <script src="../static/js/validate/funcionario-projeto.js"></script>
+</html>
