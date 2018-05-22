@@ -1,0 +1,26 @@
+#listaProjetos {
+    overflow-x:auto;
+}
+
+.table th {
+    text-align: center;
+}
+
+.table td {
+    text-align: center;
+}
+
+.table {
+    width: 90%;
+    margin: 0px auto;
+    float: none;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.alinharDireita {
+    text-align: right;
+}

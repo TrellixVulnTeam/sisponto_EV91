@@ -4,26 +4,11 @@
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Sisponto - Início</title>
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
-        <link rel="stylesheet" type="text/css" href="css/index.css"/>
+        <link rel="stylesheet" type="text/css" href="../../static/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../../static/css/index.css"/>
     </head>
     <body ng-app="sisponto" ng-controller="sisponto-controller-index">
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">SISPONTO</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Início</a></li>
-                    <li><a href="#">Clientes</a></li>
-                    <li><a href="#">Funcionários</a></li>
-                    <li><a href="#">Histórico</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
-                </ul>
-            </div>
-        </nav>
+        {% include 'navbar.html' %}
 
         <div id="main" class="container-fluid">
             <div id="top" class="row">
@@ -42,13 +27,13 @@
             <div id="btns" class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-2">
-                    <a class="btn btn-primary addCliFuncProj" href="#" role="button">Adicionar Projeto</a>
+                    <a class="btn btn-primary addCliFuncProj" href="cadastro-projeto" role="button">Adicionar Projeto</a>
                 </div>
                 <div class="col-md-2">
-                    <a class="btn btn-primary addCliFuncProj" href="#" role="button">Adicionar Cliente</a>
+                    <a class="btn btn-primary addCliFuncProj" href="cadastro-cliente" role="button">Adicionar Cliente</a>
                 </div>
                 <div class="col-md-2">
-                    <a class="btn btn-primary addCliFuncProj" href="#" role="button">Adicionar Funcionário</a>
+                    <a class="btn btn-primary addCliFuncProj" href="cadastro-funcionario" role="button">Adicionar Funcionário</a>
                 </div>
                 <div class="col-md-3"></div>
             </div>
@@ -66,13 +51,13 @@
                              </tr>
                         </thead>
                         <tbody>
-                            <tr dir-paginate="registro in lista|filter:procurar|orderBy:sortKey:reverse|itemsPerPage:1">
-                                <td>{{registro.id}}</td>
-                                <td>{{registro.descricao}}</td>
-                                <td>{{registro.perfil}}</td>
-                                <td>{{registro.cliente}}</td>
+                            <tr dir-paginate="">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 <td class="actions">
-                                    <a class="btn btn-success btn-xs" href="editarProjeto.html">Editar</a>
+                                    <a class="btn btn-success btn-xs" href="#" data-toggle="modal" data-target="#edit-modal">Editar</a>
                                     <a class="btn btn-danger btn-xs"  href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a>
                                 </td>
                             </tr>
@@ -100,11 +85,30 @@
                     </div>
                 </div>
             </div>
+            <!-- Modal edição -->
+            <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modalLabel">Editar Projeto</h4>
+                        </div>
+                        <div class="modal-body">
+                            <h4>Nova descrição</h4>  
+                            <textarea type="text" class="form-control" id="descricao" rows="5"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Sim</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>  <!-- /#main -->
     </body>
-    <script src="js/jquery-2.1.4.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/angular.min.js"></script>
-    <script src="js/validate/index.js"></script>
-    <script src="js/validate/dirPagination.js"></script>
+    <script src="../../static/js/jquery-2.1.4.min.js"></script>
+    <script src="../../static/js/bootstrap.min.js"></script>
+    <script src="../../static/js/angular.min.js"></script>
+    <script src="../../static/js/validate/index.js"></script>
+    <script src="../../static/js/validate/dirPagination.js"></script>
 </html>

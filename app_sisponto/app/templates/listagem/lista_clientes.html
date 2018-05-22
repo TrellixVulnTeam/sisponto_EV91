@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Sisponto - Funcionários</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../static/css/lista_clientes.css"/>
+    </head>
+    <body ng-app="sisponto" ng-controller="sisponto-controller-listaClientes">
+        {% include 'navbar.html' %}
+
+        <div id="main" class="container-fluid">
+            <div id="top" class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="input-group h2">
+                        <input name="data[search]" ng-model="procurar" class="form-control" id="search" type="text" placeholder="Pesquisar Cliente">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div> <!-- /#top -->
+            <div id="btns" class="row">
+                <div class="col-md-2 col-centered">
+                    <a class="btn btn-primary" href="cadastro-cliente" role="button">Adicionar Cliente</a>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="table-responsive col-md-12" id="listaFuncionarios">
+                    <table class="table table-striped" cellspacing="0" cellpadding="0">
+                        <thead>
+                            <tr class="table-header">
+                                <th>Código</th>
+                                <th>Nome</th>
+                                <th>CPF/CNPJ</th>
+                                <th class="actions">Ações</th>
+                             </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="actions">
+                                    <a class="btn btn-warning btn-xs" href="#" data-toggle="modal" data-target="#edit-modal">Editar</a>
+                                    <a class="btn btn-danger btn-xs"  href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div> <!-- /#list -->
+            <div id="bottom" class="row">
+
+            </div> <!-- /#bottom -->
+            <!-- Modal exclusão -->
+            <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modalLabel">Excluir Cliente</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table border="0">
+                                <tr>
+                                    <td class="alinharDireita"><label>Código: </label></td>
+                                    <td><input type="text" name="txtCodCli" id="txtCodCli" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="alinharDireita"><label>Nome: </label></td>
+                                    <td><input type="text" name="txtNomeCli" id="txtNomeCli" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="alinharDireita"><label>CPF/CNPJ: </label></td>
+                                    <td><input type="text" name="txtCpfCnpjCli" id="txtCpfCnpjCli" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Sim</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal edição -->
+            <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modalLabel">Atualizar Dados</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table border="0">
+                                <tr>
+                                    <td class="alinharDireita"><label>Nome: </label></td>
+                                    <td><input type="text" name="txtNomeFunc" id="txtEditNomeCli" /></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary">Sim</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  <!-- /#main -->
+    </body>
+    <script src="../static/js/jquery-2.1.4.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/angular.min.js"></script>
+    <script src="../static/js/validate/dirPagination.js"></script>
+    <script src="../static/js/validate/lista_clientes.js"></script>
+</html>

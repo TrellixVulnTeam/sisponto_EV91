@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Sisponto - Funcionários</title>
+        <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../static/css/lista_projetos.css"/>
+    </head>
+    <body ng-app="sisponto" ng-controller="sisponto-controller-listaProjetos">
+        {% include 'navbar.html' %}
+
+        <div id="main" class="container-fluid">
+            <div id="top" class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="input-group h2">
+                        <input name="data[search]" ng-model="procurar" class="form-control" id="search" type="text" placeholder="Pesquisar Projeto">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary" type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div> <!-- /#top -->
+            <div id="btns" class="row">
+                <div class="col-md-2 col-centered">
+                    <a class="btn btn-primary addCliFuncProj" href="cadastro-projeto" role="button">Adicionar Projeto</a>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="table-responsive col-md-12" id="listaProjetos">
+                    <table class="table table-striped" cellspacing="0" cellpadding="0">
+                        <thead>
+                            <tr class="table-header">
+                                <th>Código</th>
+                                <th>Cliente</th>
+                                <th>Descrição</th>
+                                <th class="actions">Ações</th>
+                             </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td class="actions">
+                                    <a class="btn btn-warning btn-xs" href="#">Editar</a>
+                                    <a class="btn btn-danger btn-xs"  href="#">Excluir</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <dir-pagination-controls max-size="5" boundary-links="true"></dir-pagination-controls>
+                </div>
+            </div> <!-- /#list -->
+            <div id="bottom" class="row">
+                
+            </div> <!-- /#bottom -->
+        </div>  <!-- /#main -->
+    </body>
+    <script src="../static/js/jquery-2.1.4.min.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/angular.min.js"></script>
+    <script src="../static/js/validate/dirPagination.js"></script>
+    <script src="../static/js/validate/lista_projetos.js"></script>
+</html>

@@ -1,0 +1,24 @@
+{% block navbar %}
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/">SISPONTO</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/">Início</a></li>
+            <li><a href="clientes">Clientes</a></li>
+            <li><a href="funcionarios">Funcionários</a></li>
+            <li><a href="projetos">Projetos</a></li>
+            <li><a href="#">Lançamentos</a></li>
+            <li><a href="#">Histórico</a></li>
+            <li><a href="#">Funcionário x Projeto</a></li>
+            <li><a href="#">Alterar senha</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="{{ url_for('auth.logout') }}"><span class="glyphicon glyphicon-log-out"></span> Sair</a></li>
+        </ul>
+    </div>
+</nav>
+
+{% endblock %}
