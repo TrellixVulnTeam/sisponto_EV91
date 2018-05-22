@@ -28,3 +28,15 @@ def projetos():
 def clientes():
     if request.method == 'GET':
         return render_template('listagem/lista_clientes.html')
+
+@listagem.route('/relatorios', methods=['GET', 'POST'])
+@login_required
+def relatorios():
+    if request.method == 'GET':
+        return render_template('listagem/relatorios.html')
+
+@listagem.route('/historico', methods=['GET', 'POST'])
+@login_required
+def historico():
+    if request.method == 'GET':
+        return render_template('listagem/historico.html')
