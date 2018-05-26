@@ -35,24 +35,29 @@
                     <table class="table table-striped" cellspacing="0" cellpadding="0">
                         <thead>
                             <tr class="table-header">
-                                <th>Código</th>
+                                <th ng-click="ordenar('id')">Código</th>
                                 <th>Nome</th>
+                                <th>Tipo Pessoa</th>
                                 <th>CPF/CNPJ</th>
+                                <th>Email</th>
                                 <th class="actions">Ações</th>
                              </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tr dir-paginate="cliente in clientes|filter:procurar|orderBy:sortKey:reverse|itemsPerPage:6">
+                                <td>{{ '{{cliente.id}}' }}</td>
+                                <td>{{ '{{cliente.nome}}' }}</td>
+                                <td>{{ '{{cliente.tipoPessoa}}' }}</td>
+                                <td>{{ '{{cliente.cpfCnpj}}' }}</td>
+                                <td>{{ '{{cliente.email}}' }}</td>
                                 <td class="actions">
-                                    <a class="btn btn-warning btn-xs" href="#" data-toggle="modal" data-target="#edit-modal">Editar</a>
-                                    <a class="btn btn-danger btn-xs"  href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a>
+                                    <a class="btn btn-warning btn-xs" href="#" ng-click="editCliente(this)" data-toggle="modal" data-target="#edit-modal">Editar</a>
+                                    <a class="btn btn-danger btn-xs"  href="#" ng-click="delCliente(this)" data-toggle="modal" data-target="#delete-modal">Excluir</a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <dir-pagination-controls max-size="5" boundary-links="true"></dir-pagination-controls>
                 </div>
             </div> <!-- /#list -->
             <div id="bottom" class="row">
@@ -69,10 +74,6 @@
                         <div class="modal-body">
                             <table border="0">
                                 <tr>
-                                    <td class="alinharDireita"><label>Código: </label></td>
-                                    <td><input type="text" name="txtCodCli" id="txtCodCli" /></td>
-                                </tr>
-                                <tr>
                                     <td class="alinharDireita"><label>Nome: </label></td>
                                     <td><input type="text" name="txtNomeCli" id="txtNomeCli" /></td>
                                 </tr>
@@ -83,7 +84,7 @@
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Sim</button>
+                            <button type="button" ng-click="deletarCliente()" class="btn btn-primary">Sim</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
                         </div>
                     </div>
@@ -101,12 +102,16 @@
                             <table border="0">
                                 <tr>
                                     <td class="alinharDireita"><label>Nome: </label></td>
-                                    <td><input type="text" name="txtNomeFunc" id="txtEditNomeCli" /></td>
+                                    <td><input type="text" name="txtEditNomeCli" id="txtEditNomeCli" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="alinharDireita"><label>Email: </label></td>
+                                    <td><input type="email" name="txtEditEmailCli" id="txtEditEmailCli" /></td>
                                 </tr>
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Sim</button>
+                            <button type="button" ng-click="atualizarCliente()" class="btn btn-primary">Sim</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
                         </div>
                     </div>
@@ -117,6 +122,7 @@
     <script src="../static/js/jquery-2.1.4.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
     <script src="../static/js/angular.min.js"></script>
+    <script src="../static/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
     <script src="../static/js/validate/dirPagination.js"></script>
     <script src="../static/js/validate/lista_clientes.js"></script>
 </html>

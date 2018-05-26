@@ -71,6 +71,15 @@ class Cliente(db.Model):
         self.tipoPessoa = tipoPessoaRecebido
         self.email = emailRecebido
 
+    def serialize(self):
+        return {
+            'id' : self.id,
+            'cpfCnpj' : self.cpfCnpj,
+            'nome' : self.nome,
+            'tipoPessoa' : self.tipoPessoa,
+            'email' : self.email
+        }
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
