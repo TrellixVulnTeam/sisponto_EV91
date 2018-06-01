@@ -36,15 +36,19 @@
                                     <thead>
                                         <tr class="table-header">
                                             <th>Selecione</th>
+                                            <th>Código</th>
                                             <th>CPF/CNPJ</th>
+                                            <th>Tipo Pessoa</th>
                                             <th>Cliente</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr ng-repeat="cliente in clientes">
                                             <td><input type="checkbox" name="chkClientes"></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{ '{{cliente.id}}' }}</td>
+                                            <td>{{ '{{cliente.cpfCnpj}}' }}</td>
+                                            <td>{{ '{{cliente.tipoPessoa}}' }}</td>
+                                            <td>{{ '{{cliente.nome}}' }}</td>
                                         </tr>
                                     </tbody>
                                 </table>

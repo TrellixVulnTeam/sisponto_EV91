@@ -7,6 +7,7 @@ from app import db
 from . import cadastro
 from ..models import User
 from ..models import Cliente
+from ..models import Projeto
 
 @cadastro.route('/cadastro-cliente', methods=['GET', 'POST'])
 def cadastrarCliente():
@@ -34,6 +35,15 @@ def cadastrarFuncionario():
 def cadastrarProjeto():
     if request.method == 'GET':
         return render_template('cadastro/cadastro-projeto.html')
+    elif request.method == 'POST':
+        try:
+            json_data = request.json
+            projeto = Projeto(json_data['descricao'], json_data['cliente'])
+            db.session.add(projeto)
+            db.session.commit()
+            return jsonify({'result': True, 'mensagem': 'Projeto cadastrado com sucesso!'})
+        except Exception as e:
+            return jsonify({'result': False, 'mensagem': 'Erro. Tente novamente!'})
 
 @cadastro.route('/funcionario-projeto', methods=['GET', 'POST'])
 @login_required

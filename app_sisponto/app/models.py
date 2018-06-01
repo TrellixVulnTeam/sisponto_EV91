@@ -3,6 +3,8 @@ from datetime import datetime
 
 from flask import request
 
+from sqlalchemy.orm import relationship, backref
+
 from . import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -78,6 +80,25 @@ class Cliente(db.Model):
             'nome' : self.nome,
             'tipoPessoa' : self.tipoPessoa,
             'email' : self.email
+        }
+
+class Projeto(db.Model):
+    __tablename__ = 'TBProjeto'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    descricao = db.Column(db.String(256), nullable=False)
+    cliente_id = db.Column(db.Integer, db.ForeignKey('TBCliente.id'))
+    cliente = db.relationship("Cliente", backref=backref("TBCliente", uselist=False))
+
+    def __init__(self, descricaoRecebida, idCliente):
+        self.descricao = descricaoRecebida
+        self.cliente_id = idCliente
+
+    def serializeProjeto(self):
+        return {
+            'id' : self.id,
+            'descricao' : self.descricao,
+            'cliente_id' : self.cliente_id,
+            'cliente_nome' : self.cliente.nome
         }
 
 @login_manager.user_loader

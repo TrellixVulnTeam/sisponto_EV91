@@ -1,31 +1,52 @@
 angular.module('sisponto',[]).controller('sisponto-controller-cadastroProjeto', function ($scope, $http, $window) {
 
-    $scope.listaClientes = [
-        {
-            'id': 1,
-            'codigo': '04506725069',
-            'nome': 'William Spader'
-        },
-        {
-            'id': 2,
-            'codigo': '00000000000191',
-            'nome': 'National Security Agency - United States of America'
-        },
-        {
-            'id': 3,
-            'codigo': '00000000000192',
-            'nome': 'Central Intelligence Agency - United States of America'
-        }]
+    $scope.projeto = {};
+
+    $window.onload = function() {
+        $http.post('/clientes').success(function (data, status) {
+            if(status === 200){
+                $scope.clientes = data.listaClientes;
+                for(let i = 0; i < $scope.clientes.length; i++)
+                {
+                    if($scope.clientes[i].tipoPessoa == "F")
+                    {
+                        $scope.clientes[i].cpfCnpj = $scope.clientes[i].cpfCnpj.substring(3);
+                    }
+                }
+            } else {
+                alert('Erro! Tente novamente mais tarde.');
+            }
+        });
+    }
     
     $scope.confirmarCadastroProjeto = function()
     {
         let clienteSelecionado;
         let table = document.getElementById('tableClientes');
+        let cont = 0;
+        for(let i = 0; i < table.rows.length; i++)
+        {
+            if(cont > 1)
+            {
+                alert('Selecione apenas um cliente');
+                return false;
+            }
+            if(table.rows[i].cells[0].childNodes[0].checked)
+            {
+                cont++;
+            }
+        }
+        if(!cont)
+        {
+            alert('Selecione pelo menos um cliente');
+            return false;
+        }
+
         for(let i = 0; i < table.rows.length; i++)
         {
             if(table.rows[i].cells[0].childNodes[0].checked)
             {
-                clienteSelecionado = table.rows[i].cells[1].childNodes[0].nodeValue + ' - ' + table.rows[i].cells[2].childNodes[0].nodeValue;
+                clienteSelecionado = table.rows[i].cells[1].childNodes[0].nodeValue + ' - ' + table.rows[i].cells[2].childNodes[0].nodeValue + ' - ' + table.rows[i].cells[4].childNodes[0].nodeValue;
                 break;
             }
         }
@@ -38,7 +59,17 @@ angular.module('sisponto',[]).controller('sisponto-controller-cadastroProjeto', 
             useBootstrap: false,
             buttons: {
                 confirmar: function () {
-                    $.alert('Confirmado!');
+                    $scope.projeto.descricao = descricaoProjeto;
+                    $scope.projeto.cliente = clienteSelecionado[0];
+
+                    $http.post('/cadastro-projeto', $scope.projeto).success(function (data, status) {
+                        if(status === 200 && data.result){
+                            alert(data.mensagem);
+                            location.reload();
+                        } else {
+                            alert(data.mensagem);
+                        }
+                    });
                 },
                 cancelar: function () {
                     $.alert('Cancelado!');

@@ -7,6 +7,7 @@ from app import db
 from . import listagem
 from ..models import User
 from ..models import Cliente
+from ..models import Projeto
 
 @listagem.route('/<username>', methods=['GET', 'POST'])
 @login_required
@@ -20,13 +21,30 @@ def funcionarios():
     if request.method == 'GET':
         return render_template('listagem/lista_funcionarios.html')
 
-@listagem.route('/projetos', methods=['GET', 'POST'])
+@listagem.route('/projetos', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
 def projetos():
     if request.method == 'GET':
         return render_template('listagem/lista_projetos.html')
+    elif request.method == 'POST':
+        retornarListaProjetos = []
+        listaProjetos = Projeto.query.all()
+        return jsonify(listaProjetos=[e.serializeProjeto() for e in listaProjetos])
+    elif request.method == 'PUT':
+        json_data = request.json
+        projeto = Projeto.query.filter_by(id=json_data['id']).first()
+        projeto.descricao = json_data['descricao']
+        db.session.commit()
+        return jsonify({'result': True, 'mensagem': 'Projeto atualizado com sucesso!'})
+    elif request.method == 'DELETE':
+        json_data = request.json
+        projeto = Projeto.query.filter_by(id=json_data['id']).first()
+        db.session.delete(projeto)
+        db.session.commit()
+        return jsonify({'result': True, 'mensagem': 'Projeto excluído com sucesso!'})
 
 @listagem.route('/clientes', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@login_required
 def clientes():
     if request.method == 'GET':
         return render_template('listagem/lista_clientes.html')

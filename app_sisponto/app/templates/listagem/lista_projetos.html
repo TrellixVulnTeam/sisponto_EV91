@@ -42,14 +42,14 @@
                              </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tr dir-paginate="projeto in projetos|filter:procurar|orderBy:sortKey:reverse|itemsPerPage:6">
+                                <td>{{ '{{projeto.id}}' }}</td>
+                                <td>{{ '{{projeto.cliente_nome}}' }}</td>
+                                <td>{{ '{{projeto.descricaoSubstr}}' }}</td>
                                 <td class="actions">
-                                    <a class="btn btn-warning btn-xs" href="#">Editar</a>
-                                    <a class="btn btn-danger btn-xs"  href="#">Excluir</a>
+                                    <a class="btn btn-success btn-xs" href="#" ng-click="visuProjeto(this)" data-toggle="modal" data-target="#visualizar-modal">Visualizar</a>
+                                    <a class="btn btn-warning btn-xs" href="#" ng-click="editProjeto(this)" data-toggle="modal" data-target="#edit-modal">Editar</a>
+                                    <a class="btn btn-danger btn-xs"  href="#" ng-click="delProjeto(this)" data-toggle="modal" data-target="#delete-modal">Excluir</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -60,11 +60,85 @@
             <div id="bottom" class="row">
                 
             </div> <!-- /#bottom -->
+            <!-- Modal visualização -->
+            <div class="modal fade" id="visualizar-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modalLabel">Visualizar Projeto</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table border="0">
+                                <tr>
+                                    <td class="alinharDireita"><label>Descrição: </label></td>
+                                    <td><textarea type="text" name="txtDescVisuProj" id="txtDescVisuProj" rows="5" cols="65"> </textarea></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal exclusão -->
+            <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modalLabel">Excluir Projeto</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table border="0">
+                                <tr>
+                                    <td class="alinharDireita"><label>Código: </label></td>
+                                    <td><input type="text" name="txtCodProjExc" id="txtCodProjExc" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="alinharDireita"><label>Descrição: </label></td>
+                                    <td><textarea type="text" name="txtDescProjExc" id="txtDescProjExc" rows="5" cols="65"> </textarea></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" ng-click="deletarProjeto()" class="btn btn-primary">Sim</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal edição -->
+            <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="modalLabel">Atualizar Descrição do Projeto</h4>
+                        </div>
+                        <div class="modal-body">
+                            <table border="0">
+                                <tr>
+                                    <td class="alinharDireita"><label>Código: </label></td>
+                                    <td><input type="text" name="txtCodProj" id="txtCodProj" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="alinharDireita"><label>Descrição: </label></td>
+                                    <td><textarea type="text" name="txtEditDescProj" id="txtEditDescProj" rows="5" cols="65"></textarea></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" ng-click="atualizarProjeto()" class="btn btn-primary">Sim</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>  <!-- /#main -->
     </body>
     <script src="../static/js/jquery-2.1.4.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
     <script src="../static/js/angular.min.js"></script>
+    <script src="../static/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
     <script src="../static/js/validate/dirPagination.js"></script>
     <script src="../static/js/validate/lista_projetos.js"></script>
 </html>
