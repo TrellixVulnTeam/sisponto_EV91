@@ -5,9 +5,7 @@ from json import dumps
 
 from app import db
 from . import listagem
-from ..models import User
-from ..models import Cliente
-from ..models import Projeto
+from ..models import User, Cliente, Projeto
 
 @listagem.route('/<username>', methods=['GET', 'POST'])
 @login_required
@@ -15,11 +13,29 @@ def index(username):
     if request.method == 'GET':
         return render_template('listagem/index.html', username=current_user.username)
 
-@listagem.route('/funcionarios', methods=['GET', 'POST'])
+@listagem.route('/funcionarios', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
 def funcionarios():
     if request.method == 'GET':
         return render_template('listagem/lista_funcionarios.html')
+    elif request.method == 'POST':
+        retornarListaFuncionarios = []
+        listaFuncionarios = User.query.all()
+        return jsonify(listaFuncionarios=[e.serializeFuncionario() for e in listaFuncionarios])
+    elif request.method == 'PUT':
+        json_data = request.json
+        user = User.query.filter_by(id=json_data['id']).first()
+        user.is_admin = json_data['perfil']
+        user.email = json_data['email']
+        user.jornada = json_data['jornada']
+        db.session.commit()
+        return jsonify({'result': True, 'mensagem': 'Funcionário atualizado com sucesso!'})
+    elif request.method == 'DELETE':
+        json_data = request.json
+        user = User.query.filter_by(id=json_data['id']).first()
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({'result': True, 'mensagem': 'Funcionário excluído com sucesso!'})
 
 @listagem.route('/projetos', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required

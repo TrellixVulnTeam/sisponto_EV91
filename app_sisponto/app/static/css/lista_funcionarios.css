@@ -2,6 +2,10 @@
     overflow-x:auto;
 }
 
+.txtPerfilFunc {
+    margin-left: 2%;
+}
+
 .table th {
     text-align: center;
 }

@@ -16,10 +16,12 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(64), nullable=False, unique=True, index=True)
     is_admin = db.Column(db.Boolean)
     password_hash = db.Column(db.String(256))
+    jornada = db.Column(db.Integer)
     name = db.Column(db.String(64))
     location = db.Column(db.String(64))
     bio = db.Column(db.Text)
     member_since = db.Column(db.DateTime(), default=datetime.utcnow)
+    cpf = db.Column(db.String(11))
     avatar_hash = db.Column(db.String(256))
     talks = db.relationship('Talk', lazy='dynamic', backref='author')
 
@@ -38,6 +40,15 @@ class User(UserMixin, db.Model):
 
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def serializeFuncionario(self):
+        return {
+            'id' : self.id,
+            'perfil' : self.is_admin,
+            'nome' : self.name,
+            'jornada' : self.jornada,
+            'email' : self.email
+        }
 
     def gravatar(self, size=100, default='identicon', rating='g'):
         if request.is_secure:
@@ -58,6 +69,13 @@ class Talk(db.Model):
     venue = db.Column(db.String(128))
     venue_url = db.Column(db.String(128))
     date = db.Column(db.DateTime())
+
+TBRelUsuProj = db.Table('TBRelUsuProj',
+    db.Column('id', db.Integer, primary_key=True, autoincrement=True),
+    db.Column('id_user', db.Integer, db.ForeignKey('users.id')),
+    db.Column('id_projeto', db.Integer, db.ForeignKey('TBProjeto.id')),
+    db.Column('is_coordenador', db.Boolean)
+)
 
 class Cliente(db.Model):
     __tablename__ = 'TBCliente'
@@ -88,6 +106,7 @@ class Projeto(db.Model):
     descricao = db.Column(db.String(256), nullable=False)
     cliente_id = db.Column(db.Integer, db.ForeignKey('TBCliente.id'))
     cliente = db.relationship("Cliente", backref=backref("TBCliente", uselist=False))
+    usuario = db.relationship("User", secondary=TBRelUsuProj)
 
     def __init__(self, descricaoRecebida, idCliente):
         self.descricao = descricaoRecebida
