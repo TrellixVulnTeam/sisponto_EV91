@@ -17,7 +17,7 @@
                     <div class="form-group col-md-4 col-sd-12 colCentered text-center">
                         <label for="slctFuncionarios">Funcionário:</label>
                         <select class="form-control" id="slctFuncionarios">
-                            <option>1</option>
+                            <option value="{{ '{{funcionario.id}}'}}" ng-repeat="funcionario in funcionarios">{{ '{{funcionario.nome}}' }}</option>
                         </select>
                     </div>
                     <div class="col-md-4"></div>
@@ -27,7 +27,7 @@
                     <div class="form-group col-md-4 col-sd-12 text-center">
                         <label for="slctProjetos">Projeto:</label>
                         <select class="form-control" id="slctProjetos">
-                            <option>1</option>
+                            <option value="{{ '{{projeto.id}}' }}" ng-repeat="projeto in projetos">{{ '{{projeto.id}}' }}</option>
                         </select>
                     </div>
                     <div class="col-md-4"></div>
@@ -35,13 +35,13 @@
                 <div class="row">
                     <div class="col-md-4"></div>
                     <div class="checkbox col-md-4 col-sd-12">
-                        <label><input type="checkbox" value="">Coordenador</label>
+                        <label><input type="checkbox" name="chkCoordenador" id="checkboxCoordenador" value="T">Coordenador</label>
                     </div>
                     <div class="col-md-4"></div>
                 </div>
                 <div class="col-md-4"></div>
                 <div class="checkbox col-md-4 col-sd-12">
-                    <label><button type="submit" class="btn btn-primary">Cadastrar</button></label>
+                    <label><button type="submit" ng-click="cadastrarRelUsuProj()" class="btn btn-primary">Cadastrar</button></label>
                 </div>
                 <div class="col-md-4"></div>
             </form>

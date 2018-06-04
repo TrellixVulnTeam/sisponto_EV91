@@ -38,19 +38,21 @@
                                 <th ng-click="ordenar('id')">Matrícula</th>
                                 <th>Nome</th>
                                 <th ng-click="ordenar('perfil')">E-mail</th>
+                                <th>Perfil</th>
                                 <th>Jornada</th>
                                 <th class="actions">Ações</th>
                              </tr>
                         </thead>
                         <tbody>
-                            <tr dir-paginate="registro in lista|filter:procurar|orderBy:sortKey:reverse|itemsPerPage:1">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tr dir-paginate="funcionario in funcionarios|filter:procurar|orderBy:sortKey:reverse|itemsPerPage:6">
+                                <td>{{ '{{funcionario.id}}' }}</td>
+                                <td>{{ '{{funcionario.nome}}' }}</td>
+                                <td>{{ '{{funcionario.email}}' }}</td>
+                                <td>{{ '{{funcionario.perfilDesc}}' }}</td>
+                                <td>{{ '{{funcionario.jornadaDesc}}' }}</td>
                                 <td class="actions">
-                                    <a class="btn btn-warning btn-xs" href="#" data-toggle="modal" data-target="#edit-modal">Editar</a>
-                                    <a class="btn btn-danger btn-xs"  href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a>
+                                    <a class="btn btn-warning btn-xs" href="#" ng-click="editFuncionario(this)" data-toggle="modal" data-target="#edit-modal">Editar</a>
+                                    <a class="btn btn-danger btn-xs"  href="#" ng-click="delFuncionario(this)" data-toggle="modal" data-target="#delete-modal">Excluir</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -73,20 +75,20 @@
                             <table border="0">
                                 <tr>
                                     <td><label>Matrícula: </label></td>
-                                    <td><input type="text" name="txtMatFunc" id="txtMatFunc" /></td>
+                                    <td><input type="text" name="txtMatFunc" class="form-control" id="txtMatFunc" /></td>
                                 </tr>
                                 <tr>
                                     <td class="alinharDireita"><label>Nome: </label></td>
-                                    <td><input type="text" name="txtNomeFunc" id="txtNomeFunc" /></td>
+                                    <td><input type="text" name="txtNomeFunc" class="form-control" id="txtNomeFunc" /></td>
                                 </tr>
                                 <tr>
-                                    <td class="alinharDireita"><label>CPF: </label></td>
-                                    <td><input type="text" name="txtCpfFunc" id="txtCpfFunc" /></td>
+                                    <td class="alinharDireita"><label>Perfil: </label></td>
+                                    <td><input type="checkbox" name="txtCpfFunc" class="txtPerfilFunc" id="perfilFuncExc" /></td>
                                 </tr>
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Sim</button>
+                            <button type="button" ng-click="deletarFuncionario()" class="btn btn-primary">Sim</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
                         </div>
                     </div>
@@ -103,17 +105,21 @@
                         <div class="modal-body">
                             <table border="0">
                                 <tr>
-                                    <td class="alinharDireita"><label>Nome: </label></td>
-                                    <td><input type="text" name="txtNomeFunc" id="txtEditNomeFunc" /></td>
+                                    <td class="alinharDireita"><label>Perfil: </label></td>
+                                    <td><input type="checkbox" name="txtPerfilFunc" class="txtPerfilFunc" id="txtPerfilFuncEdit" /></td>
                                 </tr>
                                 <tr>
                                     <td class="alinharDireita"><label>E-mail: </label></td>
-                                    <td><input type="email" name="txtEmailFunc" id="txtEditEmailFunc" /></td>
+                                    <td><input type="email" name="txtEmailFunc" class="form-control" id="txtEditEmailFunc" /></td>
+                                </tr>
+                                <tr>
+                                    <td class="alinharDireita"><label>Jornada: </label></td>
+                                    <td><input type="number" min="6" max="12" class="form-control" id="jornada"></td>
                                 </tr>
                             </table>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Sim</button>
+                            <button type="button" ng-click="atualizarFuncionario()" class="btn btn-primary">Sim</button>
                             <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
                         </div>
                     </div>
@@ -124,6 +130,7 @@
     <script src="../static/js/jquery-2.1.4.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
     <script src="../static/js/angular.min.js"></script>
+    <script src="../static/js/ui-bootstrap-tpls-2.5.0.min.js"></script>
     <script src="../static/js/validate/dirPagination.js"></script>
     <script src="../static/js/validate/lista_funcionarios.js"></script>
 </html>
