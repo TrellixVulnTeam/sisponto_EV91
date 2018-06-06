@@ -1,0 +1,16 @@
+Permissões:
+--- No momento todas funcionalidades estão liberadas, mas ao final do produto os perfis Administrador e Funcionário terão diferentes permissões de acesso às telas.
+--- A funcionalidade de cadastrar um funcionário em projeto está liberada para qualquer perfil, mas ao final apenas o Coordenador do projeto poderá criar a relação.
+
+Principais dificuldade até primeira entrega - 08/06/2018:
+--- Há problemas entre angular e flask devido às duplas chaves {{}}, solução encontrada em: 
+------ https://codehandbook.org/angularjs-not-working-in-python-flask-web-app/
+--- Configuração dos models de relação entre usuário e projeto necessitou de forte pesquisa, mas a boa documentação resolveu:
+------ http://docs.sqlalchemy.org/en/latest/orm/basic_relationships.html#association-object
+
+Alguns próximos passos:
+--- Funcionalidades de relatórios, histórico e lançamentos (Front e back end)
+--- Validar permissões - comentadas no início do arquivo -.
+--- Arquivo requirements será populado corretamente após essa primeira entrega.
+--- Validações sensíveis que foram feitas apenas em JavaScript também serão implementadas server-side, exemplo: Validação de CPF/CNPJ
+
