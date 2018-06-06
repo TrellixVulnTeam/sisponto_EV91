@@ -75,8 +75,17 @@ def lancamentos():
     if request.method == 'GET':
         return render_template('cadastro/lancamentos.html')
 
-@cadastro.route('/alterarsenha')
+@cadastro.route('/alterarsenha', methods=['GET', 'PUT'])
 @login_required
 def alterarsenha():
     if request.method == 'GET':
         return render_template('cadastro/alterar-senha.html')
+    elif request.method == 'PUT':
+        json_data = request.json
+        user = User.query.filter_by(username=current_user.username).first()
+        if(user.verify_password(json_data['old'])):
+            user.password = json_data['password']
+            db.session.commit()
+            return jsonify({'result': True, 'mensagem': 'Senha atualizada com sucesso!'})
+        else:
+            return jsonify({'result': False, 'mensagem': 'Senha atual inválida!'})

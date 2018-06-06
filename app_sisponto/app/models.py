@@ -25,6 +25,8 @@ class User(UserMixin, db.Model):
     avatar_hash = db.Column(db.String(256))
     talks = db.relationship('Talk', lazy='dynamic', backref='author')
 
+    projeto = db.relationship("RelUsuProj", back_populates="usuario")
+
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
         if (self.email is not None) and (self.avatar_hash is None):
@@ -70,13 +72,6 @@ class Talk(db.Model):
     venue_url = db.Column(db.String(128))
     date = db.Column(db.DateTime())
 
-TBRelUsuProj = db.Table('TBRelUsuProj',
-    db.Column('id', db.Integer, primary_key=True, autoincrement=True),
-    db.Column('id_user', db.Integer, db.ForeignKey('users.id')),
-    db.Column('id_projeto', db.Integer, db.ForeignKey('TBProjeto.id')),
-    db.Column('is_coordenador', db.Boolean)
-)
-
 class Cliente(db.Model):
     __tablename__ = 'TBCliente'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -106,7 +101,8 @@ class Projeto(db.Model):
     descricao = db.Column(db.String(256), nullable=False)
     cliente_id = db.Column(db.Integer, db.ForeignKey('TBCliente.id'))
     cliente = db.relationship("Cliente", backref=backref("TBCliente", uselist=False))
-    usuario = db.relationship("User", secondary=TBRelUsuProj)
+
+    usuario = db.relationship("RelUsuProj", back_populates="projeto")
 
     def __init__(self, descricaoRecebida, idCliente):
         self.descricao = descricaoRecebida
@@ -120,7 +116,16 @@ class Projeto(db.Model):
             'cliente_nome' : self.cliente.nome
         }
 
+class RelUsuProj(db.Model):
+    __tablename__ = 'TBRelUsuProj'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    projeto_id = db.Column(db.Integer, db.ForeignKey('TBProjeto.id'))
+    is_coordenador = db.Column(db.Boolean)
+
+    usuario = db.relationship("User", back_populates="projeto")
+    projeto = db.relationship("Projeto", back_populates="usuario")
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-

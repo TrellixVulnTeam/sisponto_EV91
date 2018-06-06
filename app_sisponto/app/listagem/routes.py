@@ -7,11 +7,20 @@ from app import db
 from . import listagem
 from ..models import User, Cliente, Projeto
 
-@listagem.route('/<username>', methods=['GET', 'POST'])
+@listagem.route('/<username>', methods=['GET'])
 @login_required
 def index(username):
     if request.method == 'GET':
         return render_template('listagem/index.html', username=current_user.username)
+
+@listagem.route('/listaProjFuncIndex', methods=['GET', 'POST'])
+@login_required
+def listaProjFuncIndex():
+    pass
+    #if request.method == 'POST':
+        #lista = Projeto.query.filter(Projeto.usuario.any()).all()
+        #lista = Projeto.query.join(TBRelUsuProj).filter().all()
+        #return jsonify(listaProjFunc=[e.serializeProjeto() for e in lista])
 
 @listagem.route('/funcionarios', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
