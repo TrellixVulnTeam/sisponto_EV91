@@ -126,6 +126,13 @@ class RelUsuProj(db.Model):
     usuario = db.relationship("User", back_populates="projeto")
     projeto = db.relationship("Projeto", back_populates="usuario")
 
+    def serializeIndex(self):
+        return {
+            'id' : self.id,
+            'descricao' : self.projeto.descricao,
+            'perfil': self.is_coordenador
+        }
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))

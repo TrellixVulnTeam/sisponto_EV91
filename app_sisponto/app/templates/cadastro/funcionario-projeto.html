@@ -7,11 +7,10 @@
         <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="../static/css/funcionario-projeto.css"/>
     </head>
-    <body ng-app="sisponto" ng-controller="sisponto-controller-funcionario-projeto">
+    <body ng-app="sisponto" ng-controller="sisponto-controller-funcionarioprojeto">
         {% include 'navbar.html' %}
-
         <div id="main" class="container-fluid">
-            <form id="frmFuncProj" method="POST" action="#">
+            <form id="frmFuncProj" method="POST">
                 <div class="row">
                     <div class="col-md-4"></div>
                     <div class="form-group col-md-4 col-sd-12 colCentered text-center">
@@ -41,7 +40,7 @@
                 </div>
                 <div class="col-md-4"></div>
                 <div class="checkbox col-md-4 col-sd-12">
-                    <label><button type="submit" ng-click="cadastrarRelUsuProj()" class="btn btn-primary">Cadastrar</button></label>
+                    <button type="submit" ng-click="cadastrarRelUsuProj()" class="btn btn-primary">Cadastrar</button>
                 </div>
                 <div class="col-md-4"></div>
             </form>

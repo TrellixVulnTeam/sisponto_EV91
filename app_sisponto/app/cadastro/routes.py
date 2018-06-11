@@ -5,7 +5,7 @@ from sqlalchemy.exc import IntegrityError
 
 from app import db
 from . import cadastro
-from ..models import *
+from ..models import Projeto, RelUsuProj, Cliente, User
 
 @cadastro.route('/cadastro-cliente', methods=['GET', 'POST'])
 def cadastrarCliente():
@@ -30,7 +30,8 @@ def cadastrarFuncionario():
     elif request.method == 'POST':
         try:
             json_data = request.json
-            user = User(name=json_data['name'], cpf=json_data['cpf'], email=json_data['email'], password=json_data['password_hash'], jornada=json_data['jornada'], username=json_data['username'], is_admin=json_data['is_admin'])
+            print(json_data)
+            user = User(name=json_data['name'], cpf=json_data['cpf'], email=json_data['email'], password=json_data['password'], jornada=json_data['jornada'], username=json_data['username'], is_admin=json_data['is_admin'])
             db.session.add(user)
             db.session.commit()
             return jsonify({'result': True, 'mensagem': 'Funcionário cadastrado com sucesso!'})
@@ -59,15 +60,15 @@ def relacaoFuncionarioProjeto():
         return render_template('cadastro/funcionario-projeto.html')
     elif request.method == 'POST':
         try:
-            json_data = request.json
-            user = User.query.filter_by(id=json_data['id_user']).first()
+            json_data = request.get_json()
             projeto = Projeto.query.filter_by(id=json_data['id_projeto']).first()
-            projeto.usuario.append(user)
-            projeto.usuario[0].is_coordenador = json_data['is_coordenador']
+            relUsuProj = RelUsuProj(is_coordenador=json_data['is_coordenador'])
+            relUsuProj.usuario = User.query.filter_by(id=json_data['id_user']).first()
+            projeto.usuario.append(relUsuProj)
             db.session.commit()
             return jsonify({'result': True, 'mensagem': 'Relação cadastrada com sucesso!'})
         except Exception as e:
-            return jsonify({'result': False, 'mensagem': 'Erro. Tente novamente!'})
+            return jsonify({'result': False, 'mensagem': 'Erro!'})
 
 @cadastro.route('/lancamentos')
 @login_required

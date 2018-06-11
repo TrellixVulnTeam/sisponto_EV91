@@ -24,6 +24,7 @@
                     </div>
                 </div>
             </div> <!-- /#top -->
+            {% if current_user.is_admin %}
             <div id="btns" class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-2">
@@ -37,6 +38,7 @@
                 </div>
                 <div class="col-md-3"></div>
             </div>
+            {% endif %}
             <hr />
             <div class="row">
                 <div class="table-responsive col-md-12" id="listaProjetos">
@@ -46,19 +48,16 @@
                                 <th ng-click="ordenar('id')">Código</th>
                                 <th>Descrição</th>
                                 <th ng-click="ordenar('perfil')">Perfil</th>
-                                <th>Cliente</th>
                                 <th class="actions">Ações</th>
                              </tr>
                         </thead>
                         <tbody>
-                            <tr dir-paginate="">
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tr dir-paginate="item in listaProjetosFunc|filter:procurar|orderBy:sortKey:reverse|itemsPerPage:6">
+                                <td>{{ '{{item.id}}' }}</td>
+                                <td>{{ '{{item.descricaoSubstr}}' }}</td>
+                                <td>{{ '{{item.showPerfil}}' }}</td>
                                 <td class="actions">
-                                    <a class="btn btn-success btn-xs" href="#" data-toggle="modal" data-target="#edit-modal">Editar</a>
-                                    <a class="btn btn-danger btn-xs"  href="#" data-toggle="modal" data-target="#delete-modal">Excluir</a>
+                                    <a class="btn btn-success btn-xs" href="#" data-toggle="modal" data-target="#visu-modal" ng-click="visualizarProjeto(this)">Visualizar</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -69,37 +68,16 @@
             <div id="bottom" class="row">
                 
             </div> <!-- /#bottom -->
-            <!-- Modal exclusão -->
-            <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+            <!-- Modal visualizar -->
+            <div class="modal fade" id="visu-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="modalLabel">Excluir Projeto</h4>
+                            <h4 class="modal-title" id="modalLabel">Visualizar Projeto</h4>
                         </div>
-                        <div class="modal-body">Deseja excluir este projeto? </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Sim</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Modal edição -->
-            <div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="modalLabel">Editar Projeto</h4>
-                        </div>
-                        <div class="modal-body">
-                            <h4>Nova descrição</h4>  
+                        <div class="modal-body"> 
                             <textarea type="text" class="form-control" id="descricao" rows="5"></textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Sim</button>
-                            <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
                         </div>
                     </div>
                 </div>

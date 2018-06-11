@@ -1,0 +1,36 @@
+Projeto enviado sem fonts devido ao tamanho suportado pelo moodle
+
+Logins para testes:
+   Comum com projetos relacionados:
+      admin@admin.com
+      admin123
+   Administrador sem projetos relacionados:
+      testeadmin@admin.com
+      admin123
+   Comum sem projetos relacionados:
+      naoadmin@naoadmin.com
+      naoadmin
+
+Permissões:
+--- 1. Funcionalidade de acessos diferentes às páginas para Administrador e Funcionário já está implementada.
+--- 2. A funcionalidade de cadastrar um funcionário em projeto está liberada para qualquer perfil, mas ao final apenas o Coordenador do projeto poderá criar a relação.
+
+Principais dificuldade até primeira entrega - 08/06/2018:
+--- Há problemas entre angular e flask devido às duplas chaves {{}}, solução encontrada em: 
+------ https://codehandbook.org/angularjs-not-working-in-python-flask-web-app/
+--- Configuração dos models de relação entre usuário e projeto necessitou de forte pesquisa, mas a boa documentação resolveu:
+------ http://docs.sqlalchemy.org/en/latest/orm/basic_relationships.html#association-object
+
+TBRelUsuProj:
+--- Foi colocado campo id na tabela para fins de testes, ao final do produto será retirado e as pks serão formadas pelas duas fks
+
+Alguns próximos passos:
+--- Funcionalidades de relatórios, histórico e lançamentos (Front e back end)
+--- Implementação da permissão número 2
+--- Arquivo requirements será populado corretamente após essa primeira entrega.
+--- Validações sensíveis que foram feitas apenas em JavaScript também serão implementadas server-side, exemplo: Validação de CPF/CNPJ
+--- Página relacionada ao Início terá seguine validação:
+------ Se usuário logado é administrador:
+--------- Mostrar todas relações entre funcionários x projetos
+------- Senão:
+--------- Mostrar apenas os projetos do usuário logado

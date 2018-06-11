@@ -1,4 +1,4 @@
-angular.module('sisponto',[]).controller('sisponto-controller-funcionario-projeto', function ($scope, $http, $window) {
+angular.module('sisponto',[]).controller('sisponto-controller-funcionarioprojeto', function ($scope, $http, $window) {
 
     $scope.projetos = [];
     $scope.funcionarios = [];
@@ -34,13 +34,12 @@ angular.module('sisponto',[]).controller('sisponto-controller-funcionario-projet
             $scope.relUsuProj.is_coordenador = false;
         }
         $http.post('/funcionario-projeto', $scope.relUsuProj).success(function (data, status) {
-            if(status === 200){
+            if(status === 200 && data.result){
                 alert(data.mensagem);
                 location.reload();
             } else {
-                alert('Erro! Tente novamente mais tarde.');
+                alert(data.mensagem);
             }
         });
     }
-
 });

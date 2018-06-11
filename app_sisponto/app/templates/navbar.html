@@ -7,12 +7,14 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a href="{{ url_for('listagem.index', username=current_user.username) }}">Início</a></li>
+            {% if current_user.is_admin %}
             <li><a href="clientes">Clientes</a></li>
             <li><a href="funcionarios">Funcionários</a></li>
             <li><a href="projetos">Projetos</a></li>
+            {% endif %}
+            <li><a href="funcionario-projeto">Funcionário x Projeto</a></li>
             <li><a href="lancamentos">Lançamentos</a></li>
             <li><a href="historico">Histórico</a></li>
-            <li><a href="funcionario-projeto">Funcionário x Projeto</a></li>
             <li><a href="alterarsenha">Alterar senha</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">

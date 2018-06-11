@@ -5,7 +5,7 @@ from json import dumps
 
 from app import db
 from . import listagem
-from ..models import User, Cliente, Projeto
+from ..models import User, Cliente, Projeto, RelUsuProj
 
 @listagem.route('/<username>', methods=['GET'])
 @login_required
@@ -16,11 +16,10 @@ def index(username):
 @listagem.route('/listaProjFuncIndex', methods=['GET', 'POST'])
 @login_required
 def listaProjFuncIndex():
-    pass
-    #if request.method == 'POST':
-        #lista = Projeto.query.filter(Projeto.usuario.any()).all()
-        #lista = Projeto.query.join(TBRelUsuProj).filter().all()
-        #return jsonify(listaProjFunc=[e.serializeProjeto() for e in lista])
+    if request.method == 'POST':
+        retornarListaFuncionarios = []
+        listaIndex = RelUsuProj.query.filter_by(user_id=current_user.id)
+        return jsonify(listaProjFunc=[e.serializeIndex() for e in listaIndex])
 
 @listagem.route('/funcionarios', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
