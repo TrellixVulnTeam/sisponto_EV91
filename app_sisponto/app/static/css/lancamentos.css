@@ -1,3 +1,21 @@
+.table {
+    border-radius: 5px;
+    width: 50%;
+    float: none;
+}
+
+#btnGravarAuto {
+    margin-left: 45%;
+}
+
+#tblLancamento {
+    margin-left: 22%;
+}
+
+#btnGravarManual {
+    margin-left: 45%;
+}
+
 .linha-vertical {
   height: 500px;/*Altura da linha*/
   border-left: 2px solid;/* Adiciona borda esquerda na div como ser fosse uma linha.*/

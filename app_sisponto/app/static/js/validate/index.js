@@ -16,7 +16,7 @@ angular.module('sisponto',['angularUtils.directives.dirPagination']).controller(
                     }
                     if($scope.listaProjetosFunc[i].perfil)
                     {
-                        $scope.listaProjetosFunc[i].showPerfil = 'Administrador';
+                        $scope.listaProjetosFunc[i].showPerfil = 'Coordenador';
                     }
                     else
                     {
