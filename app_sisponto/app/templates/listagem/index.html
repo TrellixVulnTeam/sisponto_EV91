@@ -45,7 +45,6 @@
                     <table class="table table-striped" cellspacing="0" cellpadding="0">
                         <thead>
                             <tr class="table-header">
-                                <th ng-click="ordenar('id')">Código</th>
                                 <th>Descrição</th>
                                 <th ng-click="ordenar('perfil')">Perfil</th>
                                 <th class="actions">Ações</th>
@@ -53,7 +52,6 @@
                         </thead>
                         <tbody>
                             <tr dir-paginate="item in listaProjetosFunc|filter:procurar|orderBy:sortKey:reverse|itemsPerPage:6">
-                                <td>{{ '{{item.id}}' }}</td>
                                 <td>{{ '{{item.descricaoSubstr}}' }}</td>
                                 <td>{{ '{{item.showPerfil}}' }}</td>
                                 <td class="actions">

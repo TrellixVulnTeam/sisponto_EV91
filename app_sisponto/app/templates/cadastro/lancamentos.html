@@ -11,58 +11,107 @@
         {% include 'navbar.html' %}
 
         <div id="main" class="container-fluid">
-            <table border="0" id="tblLancamento">
-                <tr>
-                    <td>
-                        <select>
-                            <option selected disabled>Projeto</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Data/Hora início</label>
-                    </td>
-                    <td>
-                        <input type="date" name="txtDataInicio" id="txtDataInicio"/>
-                        <input type="time" name="txtHoraInicio" id="txtHoraInicio"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Data/Hora fim</label>
-                    </td>
-                    <td>
-                        <input type="date" name="txtDataFim" id="txtDataFim"/>
-                        <input type="time" name="txtHoraFim" id="txtHoraFim"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <select>
-                            <option selected disabled>Atividade</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label>Descrição:</label>
-                    </td>
-                    <td>
-                        <textarea type="text" id="descricao" rows="5" cols="40"></textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <input type="submit" value="Enviar" />
-                    </td>
-                </tr>
-            </table>
-            <hr />
-            <button type="button" class="btn btn-success">Iniciar</button>
-            <button type="button" class="btn btn-danger">Parar</button>
+            <div class="row">
+                <div class="col-md-5 col-sd-12"></div>
+                <div class="col-md-7 col-sd-12">
+                    <button type="button" class="btn btn-success">Iniciar</button>
+                    <button type="button" class="btn btn-danger">Parar</button>
+                </div>
+            </div>
             <br />
-            <button type="button" class="btn btn-primary">Gravar</button>
+            <div class="row">
+                <div class="col-md-12 col-sd-12">
+                    <button type="button" class="btn btn-primary" id="btnGravarAuto">Gravar</button>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12 col-sd-12">
+                    <table border="0" class="table" id="tblLancamento">
+                        <form class="form-horizontal" name="formLanc" id="formLancamentos">
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="control-label">Projeto</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control" id="slctProjs">
+                                            {% for projeto in projetosUsuario %}
+                                                {% set substr = projeto.projeto.descricaoProj %}
+                                            <option value="{{projeto.projeto_id}}">{{substr[0:30]}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="control-label">Data/Hora Início:</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="date" name="txtDataInicio" id="txtDataInicio"/>
+                                        <input type="time" name="txtHoraInicio" id="txtHoraInicio"/>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="control-label">Data/Hora Fim:</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <input type="date" name="txtDataFim" id="txtDataFim"/>
+                                        <input type="time" name="txtHoraFim" id="txtHoraFim"/>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label class="control-label">Atividade</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control" id="slctAtividades">
+                                            {% for atividade in atividades %}
+                                            <option value="{{atividade.id}}">{{atividade.descricaoAtv}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <label>Descrição:</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <textarea type="text" id="descricao" rows="5" cols="40"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary" id="btnGravarManual" ng-click="gravarTarefa()">Gravar</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </form>
+                    </table>
+                </div>
+            </div>
+            <hr />
         </div>  <!-- /#main -->
     </body>
     <script src="../static/js/jquery-2.1.4.min.js"></script>
