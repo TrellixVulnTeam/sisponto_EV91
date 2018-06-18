@@ -5,6 +5,8 @@ from flask import request
 
 from sqlalchemy.orm import relationship, backref
 
+from sqlalchemy import ForeignKeyConstraint
+
 from . import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -98,29 +100,28 @@ class Cliente(db.Model):
 class Projeto(db.Model):
     __tablename__ = 'TBProjeto'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    descricao = db.Column(db.String(256), nullable=False)
+    descricaoProj = db.Column(db.String(256), nullable=False)
     cliente_id = db.Column(db.Integer, db.ForeignKey('TBCliente.id'))
     cliente = db.relationship("Cliente", backref=backref("TBCliente", uselist=False))
 
     usuario = db.relationship("RelUsuProj", back_populates="projeto")
 
     def __init__(self, descricaoRecebida, idCliente):
-        self.descricao = descricaoRecebida
+        self.descricaoProj = descricaoRecebida
         self.cliente_id = idCliente
 
     def serializeProjeto(self):
         return {
             'id' : self.id,
-            'descricao' : self.descricao,
+            'descricao' : self.descricaoProj,
             'cliente_id' : self.cliente_id,
             'cliente_nome' : self.cliente.nome
         }
 
 class RelUsuProj(db.Model):
     __tablename__ = 'TBRelUsuProj'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    projeto_id = db.Column(db.Integer, db.ForeignKey('TBProjeto.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), primary_key=True)
+    projeto_id = db.Column(db.Integer, db.ForeignKey('TBProjeto.id'), primary_key=True)
     is_coordenador = db.Column(db.Boolean)
 
     usuario = db.relationship("User", back_populates="projeto")
@@ -128,10 +129,46 @@ class RelUsuProj(db.Model):
 
     def serializeIndex(self):
         return {
-            'id' : self.id,
-            'descricao' : self.projeto.descricao,
+            'descricao' : self.projeto.descricaoProj,
             'perfil': self.is_coordenador
         }
+
+class RegistroDias(db.Model):
+    __tablename__ = 'TBRegistroDias'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    datahr_inicio = db.Column(db.String(19))
+    datahr_fim = db.Column(db.String(19))
+    descricao = db.Column(db.String(256))
+
+    user_id = db.Column(db.Integer, nullable=False)
+    projeto_id = db.Column(db.Integer, nullable=False)
+
+    ForeignKeyConstraint(['user_id', 'projeto_id'], ['RelUsuProj.user_id', 'RelUsuProj.projeto_id'])
+
+    atividade_id = db.Column(db.Integer, db.ForeignKey('TBAtividades.id'))
+
+    atividade = db.relationship("Atividades", backref=backref("TBAtividades", uselist=False))
+
+    def __init__(self, datahr_inicio_r, datahr_fim_r, descricaoRecebida, usuarioRecebido, projetoRecebido, atividadeRecebida):
+        self.datahr_inicio = datahr_inicio_r
+        self.datahr_fim = datahr_fim_r
+        self.descricao = descricaoRecebida
+        self.user_id = usuarioRecebido
+        self.projeto_id = projetoRecebido
+        self.atividade_id = atividadeRecebida
+
+    def serializeRegistros(self, descProjeto):
+        return {
+            'datahr_inicio' : self.datahr_inicio,
+            'datahr_fim' : self.datahr_fim,
+            'descricao' : self.descricao,
+            'descProjeto' : descProjeto
+        }
+
+class Atividades(db.Model):
+    __tablename__ = 'TBAtividades'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    descricaoAtv = db.Column(db.String(32))
 
 @login_manager.user_loader
 def load_user(user_id):
