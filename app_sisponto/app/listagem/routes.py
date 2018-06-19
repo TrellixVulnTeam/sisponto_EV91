@@ -103,7 +103,8 @@ def clientes():
 @login_required
 def relatorios():
     if request.method == 'GET':
-        return render_template('listagem/relatorios.html')
+        listaRegistrosUsuario = RegistroDias.query.join(Projeto, RegistroDias.projeto_id == Projeto.id).join(Atividades, RegistroDias.atividade_id == Atividades.id).add_columns(RegistroDias.datahr_inicio,RegistroDias.datahr_fim,Projeto.descricaoProj, Atividades.descricaoAtv, RegistroDias.id).filter(RegistroDias.user_id==current_user.id).all()
+        return render_template('listagem/relatorios.html', listaRegistrosUsuario=listaRegistrosUsuario)
 
 @listagem.route('/historico', methods=['GET', 'DELETE'])
 @login_required

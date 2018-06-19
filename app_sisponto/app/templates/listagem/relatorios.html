@@ -11,40 +11,49 @@
         {% include 'navbar.html' %}
 
         <div id="main" class="container-fluid">
-            <div id="top" class="row">
-                <div class="col-md-3"></div>
-                <div class="col-md-6">
-                    <div class="input-group h2">
-                        <input name="data[search]" ng-model="procurar" class="form-control" id="search" type="text" placeholder="Digite a matrícula de um funcionário ou código de projeto">
-                        <span class="input-group-btn">
-                            <button class="btn btn-primary" type="submit">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
-                    </div>
-                </div>
-            </div> <!-- /#top -->
-            <hr />
             <div class="row">
-                <div class="table-responsive col-md-12" id="table-relatorios">
-                    <table class="table table-striped" cellspacing="0" cellpadding="0">
+                <div class="table-responsive col-md-12" id="tableHistorico">
+                    <table class="table table-striped" id="tblRelatorio" cellspacing="0" cellpadding="0">
                         <thead>
                             <tr class="table-header">
-                                <th>Matrícula</th>
-                                <th>Nome</th>
-                                <th>Horas</th>
+                                <th>Código</th>
+                                <th>Data/Hora Início</th>
+                                <th>Data/Hora Fim</th>
+                                <th>Horas de Tarefas</th>
+                                <th>Horas da Equipe</th>
+                                <th>Atividade</th>
+                                <th>Projeto</th>
                              </tr>
                         </thead>
                         <tbody>
+                            {% for item in listaRegistrosUsuario %}
+                                {% set substr = item.descricaoProj %}
+                                {% if item.datahr_inicio.split(' ')[0].split('-')[2] == item.datahr_fim.split(' ')[0].split('-')[2] %}
+                                    {% set horaIni = item.datahr_inicio.split(' ')[1].replace(':', '') %}
+                                    {% set horaFim = item.datahr_fim.split(' ')[1].replace(':', '') %}
+                                    {% set resul = (horaFim|int) - (horaIni|int) %}
+                                {% else %}
+                                    {% set diferencaDias = (item.datahr_fim.split(' ')[0].split('-')[2]|int) - (item.datahr_inicio.split(' ')[0].split('-')[2]|int) %}
+                                    {% set horaIni = item.datahr_inicio.split(' ')[1].replace(':', '') %}
+                                    {% set horaFim = item.datahr_fim.split(' ')[1].replace(':', '') %}
+                                    {% if horaIni > horaFim %}
+                                        {% set resul = diferencaDias*24*100 - (horaIni|int - horaFim|int) %}
+                                    {% else %}
+                                        {% set resul = diferencaDias*24*100 + (horaFim|int - horaIni|int) %}
+                                    {% endif %}
+                                {% endif %}
                             <tr>
+                                <td>{{item.id}}</td>
+                                <td>{{item.datahr_inicio}}</td>
+                                <td>{{item.datahr_fim}}</td>
+                                <td id="colHoras">{{resul}}</td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{item.descricaoAtv}}</td>
+                                <td>{{substr[0:20]}}...</td>
                             </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
-                    <dir-pagination-controls max-size="5" boundary-links="true"></dir-pagination-controls>
                 </div>
             </div> <!-- /#list -->
             <div id="bottom" class="row">
