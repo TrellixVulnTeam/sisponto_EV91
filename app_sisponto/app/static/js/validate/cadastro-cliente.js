@@ -78,7 +78,7 @@ angular.module('sisponto',[]).controller('sisponto-controller-cadastroCliente', 
         }
         $scope.cliente.nome = $('#nome').val().trim();
 
-        $http.post('/cadastro-cliente', $scope.cliente).success(function (data, status) {
+        $http.post('/admin/cadastro-cliente', $scope.cliente).success(function (data, status) {
             if(status === 200 && data.result){
                 alert(data.mensagem);
                 location.reload();

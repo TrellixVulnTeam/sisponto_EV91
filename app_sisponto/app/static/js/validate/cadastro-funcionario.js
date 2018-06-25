@@ -21,7 +21,7 @@ angular.module('sisponto',[]).controller('sisponto-controller-cadastroFuncionari
         {
             $scope.user.is_admin = false;
         }
-        $http.post('/cadastro-funcionario', $scope.user).success(function (data, status) {
+        $http.post('/admin/cadastro-funcionario', $scope.user).success(function (data, status) {
             if(status === 200 && data.result){
                 alert(data.mensagem);
                 location.reload();

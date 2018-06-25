@@ -5,7 +5,7 @@ angular.module('sisponto',[]).controller('sisponto-controller-funcionarioprojeto
     $scope.relUsuProj = {};
 
     $window.onload = function() {
-        $http.post('/projetos').success(function (data, status) {
+        $http.post('/admin/projetos').success(function (data, status) {
             if(status === 200){
                 $scope.projetos = data.listaProjetos;
             } else {
@@ -13,7 +13,7 @@ angular.module('sisponto',[]).controller('sisponto-controller-funcionarioprojeto
             }
         });
 
-        $http.post('/funcionarios').success(function (data, status) {
+        $http.post('/admin/funcionarios').success(function (data, status) {
             if(status === 200){
                 $scope.funcionarios = data.listaFuncionarios;
             } else {

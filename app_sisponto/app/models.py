@@ -129,6 +129,8 @@ class RelUsuProj(db.Model):
 
     def serializeIndex(self):
         return {
+            'codigoProj' : self.projeto.id,
+            'usuario' : self.usuario.name,
             'descricao' : self.projeto.descricaoProj,
             'perfil': self.is_coordenador
         }

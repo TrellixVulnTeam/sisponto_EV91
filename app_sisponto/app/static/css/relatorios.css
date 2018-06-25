@@ -2,6 +2,14 @@
     overflow-x:auto;
 }
 
+#tituloHoras {
+    margin-left: 41%;
+}
+
+#btns {
+    margin-left: 40%;
+}
+
 .table th {
     text-align: center;
 }

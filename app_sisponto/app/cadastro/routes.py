@@ -3,11 +3,13 @@ from flask_login import login_required, current_user
 
 from sqlalchemy.exc import IntegrityError
 
+from datetime import datetime
+
 from app import db
 from . import cadastro
 from ..models import Projeto, RelUsuProj, Cliente, User, RegistroDias, Atividades
 
-@cadastro.route('/cadastro-cliente', methods=['GET', 'POST'])
+@cadastro.route('/admin/cadastro-cliente', methods=['GET', 'POST'])
 def cadastrarCliente():
     if request.method == 'GET':
         if not current_user.is_admin:
@@ -24,7 +26,7 @@ def cadastrarCliente():
             return jsonify({'result': False, 'mensagem': 'CPF/CNPJ ou Email já cadastrados.'})
     return jsonify({'result': False, 'mensagem': 'Erro. Tente novamente!'})
 
-@cadastro.route('/cadastro-funcionario', methods=['GET', 'POST'])
+@cadastro.route('/admin/cadastro-funcionario', methods=['GET', 'POST'])
 @login_required
 def cadastrarFuncionario():
     if request.method == 'GET':
@@ -41,7 +43,7 @@ def cadastrarFuncionario():
         except Exception as e:
             return jsonify({'result': False, 'mensagem': 'Erro. Tente novamente!'})
 
-@cadastro.route('/cadastro-projeto', methods=['GET', 'POST'])
+@cadastro.route('/admin/cadastro-projeto', methods=['GET', 'POST'])
 @login_required
 def cadastrarProjeto():
     if request.method == 'GET':
@@ -89,13 +91,20 @@ def lancamentos():
     if request.method == 'POST':
         try:
             json_data = request.get_json()
+            testeData = datetime.now().date()
+            testeDataInicio = datetime.strptime(json_data['dataInicio'], '%Y-%m-%d').date()
+            testeDataFim = datetime.strptime(json_data['dataFim'], '%Y-%m-%d').date()
             idProjeto, descricao, idAtividade = json_data['idProjeto'], json_data['descricao'], json_data['idAtividade']
             dataInicio = json_data['dataInicio']
+            if(testeDataInicio > testeData):
+                return jsonify({'result': True, 'mensagem': 'Erro! Data Início maior que Data Atual'})
             horaInicio = json_data['horaInicio']
             dthrInicio = dataInicio + ' ' + horaInicio
             dataFim = json_data['dataFim']
+            if(testeDataFim > testeData):
+                return jsonify({'result': True, 'mensagem': 'Erro! Data Fim maior que Data Atual'})
             horaFim = json_data['horaFim']
-            if dataInicio > dataFim:
+            if testeDataInicio > testeDataFim:
                 return jsonify({'result': True, 'mensagem': 'Erro! Data Início maior que Data Fim'})
             dthrFim = dataFim + ' ' + horaFim
             regDias = RegistroDias(dthrInicio, dthrFim, descricao, current_user.id, idProjeto, idAtividade)
@@ -120,7 +129,7 @@ def alterarsenha():
         else:
             return jsonify({'result': False, 'mensagem': 'Senha atual inválida!'})
 
-@cadastro.route('/atividades', methods=['GET', 'POST'])
+@cadastro.route('/admin/atividades', methods=['GET', 'POST'])
 @login_required
 def atividades():
     if request.method == 'GET':

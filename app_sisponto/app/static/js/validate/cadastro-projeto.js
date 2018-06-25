@@ -3,7 +3,7 @@ angular.module('sisponto',[]).controller('sisponto-controller-cadastroProjeto', 
     $scope.projeto = {};
 
     $window.onload = function() {
-        $http.post('/clientes').success(function (data, status) {
+        $http.post('/admin/clientes').success(function (data, status) {
             if(status === 200){
                 $scope.clientes = data.listaClientes;
                 for(let i = 0; i < $scope.clientes.length; i++)
@@ -62,7 +62,7 @@ angular.module('sisponto',[]).controller('sisponto-controller-cadastroProjeto', 
                     $scope.projeto.descricao = descricaoProjeto;
                     $scope.projeto.cliente = clienteSelecionado[0];
 
-                    $http.post('/cadastro-projeto', $scope.projeto).success(function (data, status) {
+                    $http.post('/admin/cadastro-projeto', $scope.projeto).success(function (data, status) {
                         if(status === 200 && data.result){
                             alert(data.mensagem);
                             location.reload();

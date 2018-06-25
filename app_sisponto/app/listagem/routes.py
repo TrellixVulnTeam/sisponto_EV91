@@ -3,6 +3,8 @@ from flask_login import login_required, current_user
 
 from json import dumps
 
+from datetime import datetime, timedelta
+
 from app import db
 from . import listagem
 from ..models import User, Cliente, Projeto, RelUsuProj, RegistroDias, Atividades
@@ -24,7 +26,7 @@ def listaProjFuncIndex():
             listaIndex = RelUsuProj.query.filter_by(user_id=current_user.id)
         return jsonify(listaProjFunc=[e.serializeIndex() for e in listaIndex])
 
-@listagem.route('/funcionarios', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@listagem.route('/admin/funcionarios', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
 def funcionarios():
     if request.method == 'GET':
@@ -50,7 +52,7 @@ def funcionarios():
         db.session.commit()
         return jsonify({'result': True, 'mensagem': 'Funcionário excluído com sucesso!'})
 
-@listagem.route('/projetos', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@listagem.route('/admin/projetos', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
 def projetos():
     if request.method == 'GET':
@@ -74,7 +76,7 @@ def projetos():
         db.session.commit()
         return jsonify({'result': True, 'mensagem': 'Projeto excluído com sucesso!'})
 
-@listagem.route('/clientes', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@listagem.route('/admin/clientes', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
 def clientes():
     if request.method == 'GET':
@@ -103,8 +105,33 @@ def clientes():
 @login_required
 def relatorios():
     if request.method == 'GET':
-        listaRegistrosUsuario = RegistroDias.query.join(Projeto, RegistroDias.projeto_id == Projeto.id).join(Atividades, RegistroDias.atividade_id == Atividades.id).add_columns(RegistroDias.datahr_inicio,RegistroDias.datahr_fim,Projeto.descricaoProj, Atividades.descricaoAtv, RegistroDias.id).filter(RegistroDias.user_id==current_user.id).all()
-        return render_template('listagem/relatorios.html', listaRegistrosUsuario=listaRegistrosUsuario)
+        listaCalculos = []
+        dictProjetos = {}
+        listaRegistrosUsuario = RegistroDias.query.join(Projeto, RegistroDias.projeto_id == Projeto.id).join(Atividades, RegistroDias.atividade_id == Atividades.id).add_columns(RegistroDias.datahr_inicio,RegistroDias.datahr_fim,Projeto.descricaoProj, Atividades.descricaoAtv, RegistroDias.id, Projeto.id).filter(RegistroDias.user_id==current_user.id).all()
+        FMT = '%H:%M'
+        for registro in listaRegistrosUsuario:
+            if not registro[6] in dictProjetos:
+                dictProjetos[registro[6]] = 1
+            tdelta = datetime.strptime(registro[2].split(' ')[1], FMT) - datetime.strptime(registro[1].split(' ')[1], FMT)
+            if tdelta.days < 0:
+                tdelta = timedelta(days=0, seconds=tdelta.seconds, microseconds=tdelta.microseconds)
+            listaCalculos.append(tdelta)
+
+        matriz = []
+        for key in dictProjetos:
+            listaHorasEquipe = []
+            horasEquipe = RegistroDias.query.filter_by(projeto_id=key).all()
+            print(horasEquipe)
+            soma = datetime.strptime('00:00', FMT) - datetime.strptime('00:00', FMT)
+            listaHorasEquipe.append(key)
+            for item in horasEquipe:
+                calculoEquipe = datetime.strptime(item.datahr_fim.split(' ')[1], FMT) - datetime.strptime(item.datahr_inicio.split(' ')[1], FMT)
+                if calculoEquipe.days < 0:
+                    calculoEquipe = timedelta(days=0, seconds=calculoEquipe.seconds, microseconds=calculoEquipe.microseconds)
+                soma = soma + calculoEquipe
+            listaHorasEquipe.append(soma)
+            matriz.append(listaHorasEquipe)
+        return render_template('listagem/relatorios.html', listaRegistrosUsuario=listaRegistrosUsuario, listaCalculos=listaCalculos, matriz=matriz)
 
 @listagem.route('/historico', methods=['GET', 'DELETE'])
 @login_required
