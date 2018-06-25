@@ -4,7 +4,7 @@ angular.module('sisponto',['angularUtils.directives.dirPagination', 'ui.bootstra
     $scope.clienteSelecionado = {};
 
     $window.onload = function() {
-        $http.post('/clientes').success(function (data, status) {
+        $http.post('/admin/clientes').success(function (data, status) {
             if(status === 200){
                 $scope.clientes = data.listaClientes;
                 for(let i = 0; i < $scope.clientes.length; i++)
@@ -31,7 +31,7 @@ angular.module('sisponto',['angularUtils.directives.dirPagination', 'ui.bootstra
         $scope.clienteSelecionado.nome = $('#txtEditNomeCli').val();
         $scope.clienteSelecionado.email = $('#txtEditEmailCli').val();
 
-        $http.put('/clientes', $scope.clienteSelecionado).success(function (data, status) {
+        $http.put('/admin/clientes', $scope.clienteSelecionado).success(function (data, status) {
             if(status === 200 && data.result){
                 alert(data.mensagem);
                 location.reload();
@@ -52,7 +52,7 @@ angular.module('sisponto',['angularUtils.directives.dirPagination', 'ui.bootstra
     $scope.deletarCliente = function() {
         $http({
             method: 'DELETE',
-            url: '/clientes',
+            url: '/admin/clientes',
             data: {
                 id: $scope.clienteSelecionado.id
             },

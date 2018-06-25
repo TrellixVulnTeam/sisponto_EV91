@@ -28,13 +28,13 @@
             <div id="btns" class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-2">
-                    <a class="btn btn-primary addCliFuncProj" href="cadastro-projeto" role="button">Adicionar Projeto</a>
+                    <a class="btn btn-primary addCliFuncProj" href="/admin/cadastro-projeto" role="button">Adicionar Projeto</a>
                 </div>
                 <div class="col-md-2">
-                    <a class="btn btn-primary addCliFuncProj" href="cadastro-cliente" role="button">Adicionar Cliente</a>
+                    <a class="btn btn-primary addCliFuncProj" href="/admin/cadastro-cliente" role="button">Adicionar Cliente</a>
                 </div>
                 <div class="col-md-2">
-                    <a class="btn btn-primary addCliFuncProj" href="cadastro-funcionario" role="button">Adicionar Funcionário</a>
+                    <a class="btn btn-primary addCliFuncProj" href="/admin/cadastro-funcionario" role="button">Adicionar Funcionário</a>
                 </div>
                 <div class="col-md-3"></div>
             </div>
@@ -45,6 +45,8 @@
                     <table class="table table-striped" cellspacing="0" cellpadding="0">
                         <thead>
                             <tr class="table-header">
+                                <th>Código do Projeto</th>
+                                <th>Funcionário</th>
                                 <th>Descrição</th>
                                 <th ng-click="ordenar('perfil')">Perfil</th>
                                 <th class="actions">Ações</th>
@@ -52,6 +54,8 @@
                         </thead>
                         <tbody>
                             <tr dir-paginate="item in listaProjetosFunc|filter:procurar|orderBy:sortKey:reverse|itemsPerPage:6">
+                                <td>{{ '{{item.codigoProj}}' }}</td>
+                                <td>{{ '{{item.usuario}}' }}</td>
                                 <td>{{ '{{item.descricaoSubstr}}' }}</td>
                                 <td>{{ '{{item.showPerfil}}' }}</td>
                                 <td class="actions">

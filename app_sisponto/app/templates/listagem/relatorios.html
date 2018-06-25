@@ -11,6 +11,39 @@
         {% include 'navbar.html' %}
 
         <div id="main" class="container-fluid">
+            <div id="tituloHoras" class="row">
+                <div class="col-md-12 col-sd-12">
+                    <h4 class="form-title">Horas por Equipe</h4>
+                <hr />
+                </div>
+            </div>
+            <div class="row">
+                <div class="table-responsive col-md-12" id="tableHistorico">
+                    <table class="table table-striped" id="tblRelatorio" cellspacing="0" cellpadding="0">
+                        <thead>
+                            <tr class="table-header">
+                                <th>Código do Projeto</th>
+                                <th>Horas de Tarefas</th>
+                             </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in range(matriz|length) %}
+                                <tr>
+                                    <td>{{matriz[i][0]}}</td>
+                                    <td>{{matriz[i][1]}}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div> <!-- /#list -->
+            <hr />
+            <div id="tituloHoras" class="row">
+                <div class="col-md-12 col-sd-12">
+                    <h4 class="form-title">Suas horas de tarefas</h4>
+                <hr />
+                </div>
+            </div>
             <div class="row">
                 <div class="table-responsive col-md-12" id="tableHistorico">
                     <table class="table table-striped" id="tblRelatorio" cellspacing="0" cellpadding="0">
@@ -20,36 +53,20 @@
                                 <th>Data/Hora Início</th>
                                 <th>Data/Hora Fim</th>
                                 <th>Horas de Tarefas</th>
-                                <th>Horas da Equipe</th>
                                 <th>Atividade</th>
                                 <th>Projeto</th>
                              </tr>
                         </thead>
                         <tbody>
-                            {% for item in listaRegistrosUsuario %}
-                                {% set substr = item.descricaoProj %}
-                                {% if item.datahr_inicio.split(' ')[0].split('-')[2] == item.datahr_fim.split(' ')[0].split('-')[2] %}
-                                    {% set horaIni = item.datahr_inicio.split(' ')[1].replace(':', '') %}
-                                    {% set horaFim = item.datahr_fim.split(' ')[1].replace(':', '') %}
-                                    {% set resul = (horaFim|int) - (horaIni|int) %}
-                                {% else %}
-                                    {% set diferencaDias = (item.datahr_fim.split(' ')[0].split('-')[2]|int) - (item.datahr_inicio.split(' ')[0].split('-')[2]|int) %}
-                                    {% set horaIni = item.datahr_inicio.split(' ')[1].replace(':', '') %}
-                                    {% set horaFim = item.datahr_fim.split(' ')[1].replace(':', '') %}
-                                    {% if horaIni > horaFim %}
-                                        {% set resul = diferencaDias*24*100 - (horaIni|int - horaFim|int) %}
-                                    {% else %}
-                                        {% set resul = diferencaDias*24*100 + (horaFim|int - horaIni|int) %}
-                                    {% endif %}
-                                {% endif %}
+                            {% for i in range(listaRegistrosUsuario|length) %}
+                                {% set substr = listaRegistrosUsuario[i].descricaoProj %}
                             <tr>
-                                <td>{{item.id}}</td>
-                                <td>{{item.datahr_inicio}}</td>
-                                <td>{{item.datahr_fim}}</td>
-                                <td id="colHoras">{{resul}}</td>
-                                <td></td>
-                                <td>{{item.descricaoAtv}}</td>
-                                <td>{{substr[0:20]}}...</td>
+                                <td>{{listaRegistrosUsuario[i].id}}</td>
+                                <td>{{listaRegistrosUsuario[i].datahr_inicio}}</td>
+                                <td>{{listaRegistrosUsuario[i].datahr_fim}}</td>
+                                <td>{{listaCalculos[i]}}</td>
+                                <td>{{listaRegistrosUsuario[i].descricaoAtv}}</td>
+                                <td>{{substr[0:30]}}...</td>
                             </tr>
                             {% endfor %}
                         </tbody>

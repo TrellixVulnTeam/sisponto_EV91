@@ -4,7 +4,7 @@ angular.module('sisponto',['angularUtils.directives.dirPagination', 'ui.bootstra
     $scope.funcionarioSelecionado = {};
 
     $window.onload = function() {
-        $http.post('/funcionarios').success(function (data, status) {
+        $http.post('/admin/funcionarios').success(function (data, status) {
             if(status === 200){
                 $scope.funcionarios = data.listaFuncionarios;
                 for(let i = 0; i < $scope.funcionarios.length; i++)
@@ -52,7 +52,7 @@ angular.module('sisponto',['angularUtils.directives.dirPagination', 'ui.bootstra
         $scope.funcionarioSelecionado.jornada = $('#jornada').val();
         $scope.funcionarioSelecionado.email = $('#txtEditEmailFunc').val();
 
-        $http.put('/funcionarios', $scope.funcionarioSelecionado).success(function (data, status) {
+        $http.put('/admin/funcionarios', $scope.funcionarioSelecionado).success(function (data, status) {
             if(status === 200 && data.result){
                 alert(data.mensagem);
                 location.reload();
@@ -79,7 +79,7 @@ angular.module('sisponto',['angularUtils.directives.dirPagination', 'ui.bootstra
     $scope.deletarFuncionario = function() {
         $http({
             method: 'DELETE',
-            url: '/funcionarios',
+            url: '/admin/funcionarios',
             data: {
                 id: $scope.funcionarioSelecionado.id
             },

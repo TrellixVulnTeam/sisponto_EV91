@@ -8,10 +8,10 @@
         <ul class="nav navbar-nav">
             <li class="active"><a href="{{ url_for('listagem.index', username=current_user.username) }}">Início</a></li>
             {% if current_user.is_admin %}
-            <li><a href="clientes">Clientes</a></li>
-            <li><a href="funcionarios">Funcionários</a></li>
-            <li><a href="projetos">Projetos</a></li>
-            <li><a href="atividades">Atividades</a></li>
+            <li><a href="/admin/clientes">Clientes</a></li>
+            <li><a href="/admin/funcionarios">Funcionários</a></li>
+            <li><a href="/admin/projetos">Projetos</a></li>
+            <li><a href="/admin/atividades">Atividades</a></li>
             {% endif %}
             <li><a href="funcionario-projeto">Funcionário x Projeto</a></li>
             <li><a href="lancamentos">Lançamentos</a></li>

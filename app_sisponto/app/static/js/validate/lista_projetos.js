@@ -4,7 +4,7 @@ angular.module('sisponto',['angularUtils.directives.dirPagination', 'ui.bootstra
     $scope.projetoSelecionado = {};
 
     $window.onload = function() {
-        $http.post('/projetos').success(function (data, status) {
+        $http.post('/admin/projetos').success(function (data, status) {
             if(status === 200){
                 $scope.projetos = data.listaProjetos;
                 for(let i = 0; i < $scope.projetos.length; i++)
@@ -37,7 +37,7 @@ angular.module('sisponto',['angularUtils.directives.dirPagination', 'ui.bootstra
         $scope.projetoSelecionado.id = $('#txtCodProj').val();
         $scope.projetoSelecionado.descricao = $('#txtEditDescProj').val();
 
-        $http.put('/projetos', $scope.projetoSelecionado).success(function (data, status) {
+        $http.put('/admin/projetos', $scope.projetoSelecionado).success(function (data, status) {
             if(status === 200 && data.result){
                 alert(data.mensagem);
                 location.reload();
@@ -57,7 +57,7 @@ angular.module('sisponto',['angularUtils.directives.dirPagination', 'ui.bootstra
     $scope.deletarProjeto = function() {
         $http({
             method: 'DELETE',
-            url: '/projetos',
+            url: '/admin/projetos',
             data: {
                 id: $scope.projetoSelecionado.id
             },
