@@ -172,6 +172,12 @@ class Atividades(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     descricaoAtv = db.Column(db.String(32))
 
+    def serializeAtividades(self):
+        return {
+            'id' : self.id,
+            'descricao' : self.descricaoAtv
+        }
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))

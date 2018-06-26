@@ -28,6 +28,51 @@
                 </div>
             </form>
         </div>  <!-- /#main -->
+        <div class="row">
+            <div class="table-responsive col-md-12" id="listaProjetos">
+                <table class="table table-striped" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr class="table-header">
+                            <th>Código</th>
+                            <th>Descrição</th>
+                            <th class="actions">Ação</th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="atividade in listaAtividades">
+                            <td>{{ '{{atividade.id}}' }}</td>
+                            <td>{{ '{{atividade.descricao}}' }}</td>
+                            <td class="actions">
+                                <a class="btn btn-danger btn-xs"  href="#" ng-click="delAtividade(this)" data-toggle="modal" data-target="#delete-modal">Excluir</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div> <!-- /#list -->
+        <!-- Modal exclusão -->
+        <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="modalLabel">Excluir Atividade</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table border="0">
+                            <tr>
+                                <td class="alinharDireita"><label>Descrição: </label></td>
+                                <td><input type="text" name="txtDesc" class="form-control" id="txtDesc" /></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" ng-click="deletarAtividade()" class="btn btn-primary">Sim</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">N&atilde;o</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
     <script src="../static/js/jquery-2.1.4.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>

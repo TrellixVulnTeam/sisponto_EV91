@@ -121,7 +121,6 @@ def relatorios():
         for key in dictProjetos:
             listaHorasEquipe = []
             horasEquipe = RegistroDias.query.filter_by(projeto_id=key).all()
-            print(horasEquipe)
             soma = datetime.strptime('00:00', FMT) - datetime.strptime('00:00', FMT)
             listaHorasEquipe.append(key)
             for item in horasEquipe:

@@ -129,17 +129,26 @@ def alterarsenha():
         else:
             return jsonify({'result': False, 'mensagem': 'Senha atual inválida!'})
 
-@cadastro.route('/admin/atividades', methods=['GET', 'POST'])
+@cadastro.route('/admin/atividades', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
 def atividades():
     if request.method == 'GET':
         if not current_user.is_admin:
             return render_template('listagem/index.html')
         return render_template('cadastro/atividades.html')
-    elif request.method == 'POST':
+    elif request.method == 'PUT':
         json_data = request.json
         atividade = Atividades()
         atividade.descricaoAtv = json_data['descricao']
         db.session.add(atividade)
         db.session.commit()
         return jsonify({'result': True, 'mensagem': 'Atividade cadastrada com sucesso!'})
+    elif request.method == 'POST':
+        listaAtividades = Atividades.query.all()
+        return jsonify(listaAtividades=[e.serializeAtividades() for e in listaAtividades])
+    elif request.method == 'DELETE':
+        json_data = request.json
+        atividade = Atividades.query.filter_by(id=json_data['id']).first()
+        db.session.delete(atividade)
+        db.session.commit()
+        return jsonify({'result': True, 'mensagem': 'Atividade excluída com sucesso!'})
