@@ -6,8 +6,11 @@ angular.module('sisponto',[]).controller('sisponto-controller-lancamentos', func
     var d2;
 
     $window.onload = function() {
+        document.getElementById('btnParar').disabled = true;
         document.getElementById('tmpTrab').style.display = 'none';
         document.getElementById('tmpTrab').disabled = true;
+        document.getElementById('txtInicio').style.display = 'none';
+        document.getElementById('txtFim').style.display = 'none';
     }
 
     $scope.controlarTarefa = function(identificaBotaoBool) {
@@ -23,6 +26,12 @@ angular.module('sisponto',[]).controller('sisponto-controller-lancamentos', func
             alert('Tarefa iniciada');
             d1 = new Date(); //"now"
             flag = true;
+            document.getElementById('btnParar').disabled = false;
+            document.getElementById('btnIniciar').disabled = true;
+            document.getElementById('txtInicio').style.display = '';
+            document.getElementById('txtInicio').disabled = true;
+            document.getElementById('txtFim').disabled = true;
+            document.getElementById('txtInicio').value = 'Início da tarefa: ' + d1.getHours() + ':' + d1.getMinutes() + 'h';
         }
         else {
             alert('Tarefa finalizada');
@@ -35,6 +44,8 @@ angular.module('sisponto',[]).controller('sisponto-controller-lancamentos', func
             var mm = Math.floor(msec / 1000 / 60);
             document.getElementById('tmpTrab').value = 'Tempo trabalhado: ' + hh + ':' + mm + 'h';
             document.getElementById('tmpTrab').style.display = '';
+            document.getElementById('txtFim').style.display = '';
+            document.getElementById('txtFim').value = 'Fim da tarefa: ' + d2.getHours() + ':' + d2.getMinutes(); + 'h';
         }
         let d = new Date();
         let ano = d.getFullYear();
