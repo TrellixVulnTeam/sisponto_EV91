@@ -60,15 +60,17 @@ def cadastrarProjeto():
         except Exception as e:
             return jsonify({'result': False, 'mensagem': 'Erro. Tente novamente!'})
 
-@cadastro.route('/funcionario-projeto', methods=['GET', 'POST'])
+@cadastro.route('/funcionario-projeto', methods=['GET', 'POST', 'PUT', 'DELETE'])
 @login_required
 def relacaoFuncionarioProjeto():
     if request.method == 'GET':
         return render_template('cadastro/funcionario-projeto.html')
-    elif request.method == 'POST':
+    elif request.method == 'PUT':
         try:
             json_data = request.get_json()
             permissaoCoordenador = RelUsuProj.query.filter_by(user_id=current_user.id, projeto_id=json_data['id_projeto']).first()
+            if permissaoCoordenador is None:
+                permissaoCoordenador = RelUsuProj()
             if current_user.is_admin or permissaoCoordenador.is_coordenador:
                 projeto = Projeto.query.filter_by(id=json_data['id_projeto']).first()
                 relUsuProj = RelUsuProj(user_id=json_data['id_user'], projeto_id=json_data['id_projeto'], is_coordenador=json_data['is_coordenador'])
@@ -79,7 +81,20 @@ def relacaoFuncionarioProjeto():
             else:
                 return jsonify({'result': True, 'mensagem': 'Apenas Administradores e Coordenadores podem cadastrar'})
         except Exception as e:
+            print(e)
             return jsonify({'result': False, 'mensagem': 'Erro!'})
+    elif request.method == 'POST':
+        listaRelacoes = RelUsuProj.query.all()
+        return jsonify(listaRelacoes=[e.serializeRelacoes() for e in listaRelacoes])
+    elif request.method == 'DELETE':
+        if current_user.is_admin:
+            json_data = request.get_json()
+            relacao = RelUsuProj.query.filter_by(user_id=json_data['idUsu'], projeto_id=json_data['idProj']).first()
+            db.session.delete(relacao)
+            db.session.commit()
+            return jsonify({'result': True, 'mensagem': 'Funcionário retirado do projeto!'})
+        else:
+            return jsonify({'result': True, 'mensagem': 'Ação exclusiva para administradores do sistema!'})
 
 @cadastro.route('/lancamentos', methods=['GET', 'POST'])
 @login_required

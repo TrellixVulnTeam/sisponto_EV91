@@ -135,6 +135,14 @@ class RelUsuProj(db.Model):
             'perfil': self.is_coordenador
         }
 
+    def serializeRelacoes(self):
+        return {
+            'codigoProj' : self.projeto.id,
+            'codigoUsu' : self.usuario.id,
+            'descProj' : self.projeto.descricaoProj,
+            'nomeFunc' : self.usuario.name
+        }
+
 class RegistroDias(db.Model):
     __tablename__ = 'TBRegistroDias'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)

@@ -4,16 +4,24 @@
     float: none;
 }
 
+#txtInicio{
+    margin-left: 50%;
+}
+
+#txtFim{
+    margin-left: 50%;
+}
+
+#tmpTrab {
+    margin-left: 50%;
+}
+
 #btnGravarAuto {
     margin-left: 45%;
 }
 
 #tblLancamento {
     margin-left: 22%;
-}
-
-#tmpTrab {
-    margin-left: 40%;
 }
 
 #btnGravarManual {
